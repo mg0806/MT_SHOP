@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import Footer from '@/components/Footer/Footer'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const poppins = Poppins({ subsets: ['latin'],weight:['400','700'] })
 

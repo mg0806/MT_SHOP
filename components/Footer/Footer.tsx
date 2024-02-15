@@ -18,6 +18,7 @@ const Footer = () => {
                 <Link href="#">Watches</Link>
                 <Link href="#">TVs</Link>
                 <Link href="#">Accessories</Link>
+                
             </FooterList>
             <FooterList>
                 <h3 className=" text-base mb-2 font-bold"> Customer Services</h3>

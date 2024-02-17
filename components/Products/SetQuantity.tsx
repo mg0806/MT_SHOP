@@ -27,7 +27,7 @@ const SetQuantity: React.FC<SetQtyProps> = ({
             <div className=" flex gap-4 items-center text-base">
                 <button onClick={handleQtyDecrease} className={btnStyles}>-</button>
             </div>
-            <div>{cartProduct.quantity}</div>
+            <div>{cartProduct.quantity} </div>
             <div>
                 <button onClick={handleQtyIncrease} className={btnStyles}>+</button>
             </div>

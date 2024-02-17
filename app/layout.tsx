@@ -5,6 +5,9 @@ import { Poppins } from 'next/font/google'
 import Footer from '@/components/Footer/Footer'
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from '@vercel/analytics/react';
+import { CartContextProvider } from '../hooks/useCart';
+import CartProvider from '../providers/cartProviders';
+import { Toaster } from 'react-hot-toast'
 
 const poppins = Poppins({ subsets: ['latin'],weight:['400','700'] })
 
@@ -21,16 +24,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} text-slate-700`}>
-
-
-        <div className='felx flex-col min-h-screen'>
+        <Toaster toastOptions={{style:{
+          background:"rgb(51 65 85)",
+          color: '#FFFFFF',
+        }}}/>
+      <CartProvider>
+      <div className='felx flex-col min-h-screen'>
         <Navbar/>
         <main className='flex-grow'>{children}</main>
-
         <Footer/>
-
-
         </div>
+      </CartProvider>
+        
 
         <Analytics />
         <SpeedInsights />

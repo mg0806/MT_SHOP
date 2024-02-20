@@ -5,7 +5,6 @@ import { Poppins } from 'next/font/google'
 import Footer from '@/components/Footer/Footer'
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from '@vercel/analytics/react';
-import { CartContextProvider } from '../hooks/useCart';
 import CartProvider from '../providers/cartProviders';
 import { Toaster } from 'react-hot-toast'
 

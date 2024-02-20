@@ -3,8 +3,6 @@
 import Input from "@/components/inputs/input";
 import Button from "@/components/universal/Button";
 import Heading from "@/components/universal/Heading";
-import CredentialsProvider from "next-auth/providers/credentials";
-
 import { useState } from "react";
 import { FieldValues, useForm ,SubmitHandler} from "react-hook-form";
 import Link from 'next/link';

@@ -3,7 +3,6 @@ import { CartProductType } from "../product/[productId]/ProductDetails";
 import { formatPrice } from "@/Utils/formatPrice";
 import Link from "next/link";
 import { truncateText } from "@/Utils/truncateText";
-import Button from "@/components/universal/Button";
 import Image from "next/image";
 import SetQuantity from "@/components/Products/SetQuantity";
 import { useCart } from "@/hooks/useCart";

@@ -3,9 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/libs/prismadb";
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-import { signIn } from 'next-auth/react';
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),

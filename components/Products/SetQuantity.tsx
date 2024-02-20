@@ -1,6 +1,7 @@
 'use client'
 
 import { CartProductType } from "@/app/product/[productId]/ProductDetails";
+import Button from "../universal/Button";
 
 interface SetQtyProps{
     cartCounter?: boolean;
@@ -26,10 +27,14 @@ const SetQuantity: React.FC<SetQtyProps> = ({
             }
             <div className=" flex gap-4 items-center text-base">
                 <button onClick={handleQtyDecrease} className={btnStyles}>-</button>
+                {/* <Button lable="-" onClick={handleQtyDecrease}/> */}
             </div>
             <div>{cartProduct.quantity} </div>
             <div>
                 <button onClick={handleQtyIncrease} className={btnStyles}>+</button>
+                {/* <Button lable="+" onClick={handleQtyIncrease}/> */}
+
+
             </div>
         </div>
      );

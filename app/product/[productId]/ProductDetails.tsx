@@ -1,12 +1,10 @@
-/* eslint-disable react/jsx-no-duplicate-props */
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 
 import { Rating } from '@mui/material';
 import Image from 'next/image';
+import { product} from "../../../Utils/product";
 import { useCallback, useEffect, useState } from 'react';
-import { product } from '../../../Utils/product';
 import SetColor from '@/components/Products/SetColor';
 import SetQuantity from '@/components/Products/SetQuantity';
 import Button from '@/components/universal/Button';
@@ -14,6 +12,8 @@ import ProductImage from '@/components/Products/ProductImage';
 import { useCart } from '@/hooks/useCart';
 import { MdCheckCircle } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
+import { products } from '@/Utils/products';
+
 
 
 interface ProductDetailsProps{
@@ -34,7 +34,7 @@ export type CartProductType = {
 export type SelectedImgType = {
     color:string;
     colorCode:string;
-    image:string;
+    image:string[];
 
 }
 
@@ -49,17 +49,16 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({product}) => {
     const {handleAddProductToCart,cartProducts} = useCart();
     const[isProductInCart,setIsProductInCart] = useState(false);
     const [cartProduct , setCartProduct] = useState<CartProductType>({
-        id:product.id,
+        id:product.id, 
         name:product.name,
         description:product.description,
         category:product.category,
         brand:product.brand,
-        selectedImg: {...product.images[0]},
+        selectedImg:product.images[0] ,
         quantity:1,
         price:product.price,
     })
    const router = useRouter()
-    console.log(cartProducts )
     useEffect(()=>{
         setIsProductInCart(false)
 
@@ -71,6 +70,8 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({product}) => {
             }
         }
     },[cartProducts])
+    console.log("image",product.images[0])
+
 const productRating = product.reviews.reduce((acc:number,item:any)=> item.rating + acc ,0)/product.reviews.length;
    
     const handleColorSelect = useCallback((value:SelectedImgType)=>{
@@ -84,7 +85,7 @@ const productRating = product.reviews.reduce((acc:number,item:any)=> item.rating
             return;
         }
         setCartProduct((prev) =>{
-            return {...prev,quantity: prev.quantity++}
+            return {...prev,quantity: prev.quantity+1}
         })
     },[cartProduct]);
 
@@ -94,9 +95,11 @@ const productRating = product.reviews.reduce((acc:number,item:any)=> item.rating
             return;
         }
         setCartProduct((prev) =>{
-            return {...prev,quantity: prev.quantity--}
+            return {...prev,quantity: prev.quantity-1}
         })
     },[cartProduct]);
+
+
 
     return ( 
 
@@ -139,6 +142,7 @@ const productRating = product.reviews.reduce((acc:number,item:any)=> item.rating
             />
             <HorizontalLine/>
             <SetQuantity
+            // cartCounter={cartCounter}
             cartProduct={cartProduct}
             handleQtyIncrease={handleQtyIncrease}
             handleQtyDecrease={handleQtyDecrease}

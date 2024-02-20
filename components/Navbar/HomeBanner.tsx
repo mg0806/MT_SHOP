@@ -11,7 +11,7 @@ const HomeBanner = () => {
                         
                 </div>
                 <div className="w-1/2 max-sm:w-full relative aspect-video ">
-                    <Image src="/banner-image.jpg" width={600} height={600} priority={true} alt="Banner Image" className="object-contain rounded-[20px] " />
+                    <Image src="/banner-image.jpg" width={800} height={800} priority={true} alt="Banner Image" className="object-contain rounded-[20px] " />
                 </div>
             </div>
         </div>

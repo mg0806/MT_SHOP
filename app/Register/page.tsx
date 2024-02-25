@@ -1,12 +1,15 @@
 import FormWrap from '@/components/Products/FormWarp';
 import Container from '@/components/universal/Container';
 import RegisterForm from './RegisterForm';
-const Register = () => {
+import { getCurrentUser } from '@/actions/getCurrentUser';
+const Register = async() => {
+    const currentUser = await getCurrentUser();
+
     return ( 
 
         <Container>
             <FormWrap>
-                <RegisterForm/>
+                <RegisterForm currentUser = {currentUser}/>
             </FormWrap>
         </Container>
 

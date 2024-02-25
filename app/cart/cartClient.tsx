@@ -7,22 +7,29 @@ import { useCart } from "@/hooks/useCart";
 import Button from "@/components/universal/Button";
 import ItemContent from './itemContent';
 import { formatPrice } from "@/Utils/formatPrice";
+import { SafeUser } from "@/types";
+import { useRouter } from "next/navigation";
+
+interface CartClientProps{
+
+    currentUser : SafeUser | null;
+}
 
 
-
-
-const CartClient = () => {
+const CartClient: React.FC<CartClientProps> = ({currentUser}) => {
     const {cartProducts,handleClearCart,cartTotalAmount} = useCart()
+    const router = useRouter();
 
     if (!cartProducts || cartProducts.length === 0)  {
         return(
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center  ">
                 <div className="text-2xl">Your cart is empty</div>
                 <div>
                     <Link href={"/"} className="text-slate-500 flex items-center gap-1 mt-2 ">
                         <MdArrowBack/>
-                         <span>Start Shopping</span>
+                        <span>Start Shopping</span>
                     </Link>
+                    <div className="mb-[446px]"></div>
                 </div>
             </div>
         )
@@ -32,14 +39,14 @@ const CartClient = () => {
 
         <div>
             <Heading title="Shopping Cart" center/>
-            <div className=" grid grid-cols-5   text-xs gap-4 pb-2  mt-8">
+            <div className=" grid grid-cols-5 text-xs pb-2 mt-8 gap-4">
                 <div className="col-span-2 justify-self-start ml-4 ">PRODUCT</div>
                 <div className=" justify-self-center ">PRICE</div>
                 <div className=" justify-self-center  ">QUANTITY</div>
                 <div className=" justify-self-end mr-4">TOTAL</div>
                 
             </div>
-            <div>{cartProducts && cartProducts.map((item)=>{
+            <div className="">{cartProducts && cartProducts.map((item)=>{
                     return <ItemContent key={item.id} item={item}/>
                 })}
                 </div>
@@ -53,11 +60,18 @@ const CartClient = () => {
                     <span>{formatPrice(cartTotalAmount)}</span>
                     </div>
                     <p className="text-slate-500 max-sm:mt-2">Taxes and shipping calculate at chechout</p>
-                    <Button lable="Checkout" onClick={()=>{}}/>
+                    <Button 
+                    lable={currentUser ? 'Checkout' : 'Login to Checkout'} 
+                    outline={currentUser? false: true}
+                    onClick={()=>{
+                        currentUser ? router.push('/checkout') : router.push('/Login')
+                    }}
+                    />
                     <Link href={"/"} className="text-slate-500 flex items-center gap-1 mt-2 ">
                         <MdArrowBack/>
-                         <span>Continue Shopping</span>
+                        <span>Continue Shopping</span>
                     </Link>
+                    <div className="mb-[150px]"></div>
                 </div>
             </div>
         </div>

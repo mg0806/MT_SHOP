@@ -17,6 +17,8 @@ type CartContextType = {
   handleCartQtyIncrease: (product: CartProductType) => void;
   handleCartQtyDecrease: (product: CartProductType) => void;
   handleClearCart: () => void;
+  paymentIntent: string | null;
+  handelSetPaymentIntent: (val: string | null) => void;
 };
 
 export const CartContext = createContext<CartContextType | null>(null);
@@ -34,17 +36,17 @@ export const CartContextProvider = (props: Props) => {
     null
   );
 
-  console.log('qty:',cartTotalQty);
-  console.log('Amount:',cartTotalAmount);
-  
-  
-
+  const[paymentIntent , setPatmentIntent] = useState<string | null>(null);
   // Using useEffect to make our page saty where we left after adding products to cart
   useEffect(() => {
     const cartItems: any = localStorage.getItem("MTshopCartItems");
     const cProducts: CartProductType[] | null = JSON.parse(cartItems);
+    const MTShopPaymentIntent:any = localStorage.getItem('MTShopPaymentIntent')
+    const paymentIntent:string | null = JSON.parse(MTShopPaymentIntent)
+
 
     setCartProducts(cProducts);
+    setPatmentIntent(paymentIntent);
   }, []);
 
   //subTotal Function
@@ -166,6 +168,11 @@ export const CartContextProvider = (props: Props) => {
     localStorage.setItem("MTshopCartItems", JSON.stringify(null));
   }, [cartProducts]);
 
+  const handelSetPaymentIntent = useCallback((val: string | null) => {
+    setPatmentIntent(val);
+    localStorage.setItem('MTShopPaymentIntent', JSON.stringify(val));
+  },[paymentIntent])
+
   const value = {
     cartTotalQty,
   cartTotalAmount,
@@ -175,6 +182,8 @@ export const CartContextProvider = (props: Props) => {
     handleCartQtyIncrease,
     handleCartQtyDecrease,
     handleClearCart,
+    paymentIntent,
+    handelSetPaymentIntent
   };
 
   return <CartContext.Provider value={value} {...props} />;

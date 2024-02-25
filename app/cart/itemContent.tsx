@@ -17,8 +17,7 @@ const ItemContent: React.FC<itemContentProps> = ({item}) => {
     const {handleRemoveProductFromCart,handleCartQtyIncrease,handleCartQtyDecrease} = useCart();
 
     return (
-        
-        <div className="  grid grid-cols-5    text-xs md:text-sm gap-4 rounded-lg border broder-[1.5px] border-slate-400 py-4 justify-between items-center">
+        <div className=" border broder-[1.5px] border-slate-400 grid grid-cols-5  text-xs md:text-sm gap-4 rounded-lg px-2  py-4 justify-between items-center">
             <div className=" col-span-2  justify-self-start flex gap-2 md-gap-4 ">
                 <Link href={`/product/${item.id}`}>
                     <div className="relative w-[70px]  aspect-square">

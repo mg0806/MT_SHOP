@@ -7,6 +7,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from '@vercel/analytics/react';
 import CartProvider from '../providers/cartProviders';
 import { Toaster } from 'react-hot-toast'
+import { getCurrentUser } from '@/actions/getCurrentUser'
 
 const poppins = Poppins({ subsets: ['latin'],weight:['400','700'] })
 
@@ -15,11 +16,13 @@ export const metadata: Metadata = {
   description: 'E-commerce website',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  
+
   return (
     <html lang="en">
       <body className={`${poppins.className} text-slate-700`}>
@@ -30,7 +33,7 @@ export default function RootLayout({
       <CartProvider>
       <div className='felx flex-col min-h-screen'>
         <Navbar/>
-        <main className='flex-grow'>{children}</main>
+        <main className=' mt-auto'>{children}</main>
         <Footer/>
         </div>
       </CartProvider>

@@ -70,7 +70,7 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({product}) => {
             }
         }
     },[cartProducts])
-    console.log("image",product.images[0])
+    // console.log("image",product.images[0])
 
 const productRating = product.reviews.reduce((acc:number,item:any)=> item.rating + acc ,0)/product.reviews.length;
    

@@ -13,6 +13,7 @@ import { useCart } from '@/hooks/useCart';
 import { MdCheckCircle } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
 import { products } from '@/Utils/products';
+import { formatPrice } from '@/Utils/formatPrice';
 
 
 
@@ -117,12 +118,16 @@ const productRating = product.reviews.reduce((acc:number,item:any)=> item.rating
             <div className='text-justify'>{product.description}</div>
             <HorizontalLine/>
             <div>
-                <span className=' font-semibold'>CATEGORY:</span>
+                <span className=' font-semibold'>CATEGORY: </span>
                 {product.category}
             </div>
             <div>
-                <span className=' font-semibold'>BRAND:</span>
+                <span className=' font-semibold'>BRAND: </span>
                 {product.brand}
+            </div>
+            <div>
+                <span className=' font-semibold'>PRICE: </span>
+                {formatPrice(product.price)}
             </div>
             <div className={product.inStock ? 'text-teal-400':' text-red-400'}>{product.inStock ? "In Stock" : "Out of Stock"}</div>
             <HorizontalLine/>

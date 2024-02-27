@@ -17,8 +17,9 @@ const ItemContent: React.FC<itemContentProps> = ({item}) => {
     const {handleRemoveProductFromCart,handleCartQtyIncrease,handleCartQtyDecrease} = useCart();
 
     return (
-        <div className=" border broder-[1.5px] border-slate-400 grid grid-cols-5  text-xs md:text-sm gap-4 rounded-lg px-2  py-4 justify-between items-center">
-            <div className=" col-span-2  justify-self-start flex gap-2 md-gap-4 ">
+        <div className="">
+            <div className=" border broder-[1.5px] border-slate-400 grid grid-cols-5  text-xs md:text-sm m-2 rounded-lg px-2 py-4 justify-between items-center ">
+            <div className="relative col-span-2  justify-self-start flex gap-2 md-gap-4 ">
                 <Link href={`/product/${item.id}`}>
                     <div className="relative w-[70px]  aspect-square">
                         <Image src={`${item.selectedImg.image}`} alt={item.name} fill  className="object-contain"/>
@@ -33,9 +34,12 @@ const ItemContent: React.FC<itemContentProps> = ({item}) => {
                     <button className="text-slate-500 underline" onClick={()=>handleRemoveProductFromCart(item)}>Remove</button>
                 </div>
                 </div>
+                <div className=" justify-self-end font-semibold items-center">
+                {formatPrice(item.price*item.quantity)}
             </div>
-            <div className=" justify-self-center ">{formatPrice(item.price)}</div>
-            <div className=" justify-self-center ">
+            </div>
+            <div className=" justify-self-center hidden md:block">{formatPrice(item.price)}</div>
+            <div className=" justify-self-center hidden md:block">
                 <SetQuantity 
                 cartCounter={true}
                 cartProduct={item}
@@ -43,9 +47,10 @@ const ItemContent: React.FC<itemContentProps> = ({item}) => {
                 handleQtyDecrease={()=>{handleCartQtyDecrease(item)}}
                 />
             </div>
-            <div className=" justify-self-end font-semibold  ">
+            <div className=" justify-self-end font-semibold hidden md:block ">
                 {formatPrice(item.price*item.quantity)}
             </div>
+        </div>
         </div>
      );
 }

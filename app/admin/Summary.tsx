@@ -3,7 +3,7 @@
 import { formatNumber } from "@/Utils/formatNumber";
 import { formatPrice } from "@/Utils/formatPrice";
 import Heading from "@/components/universal/Heading";
-import { Order, Product, User } from "@prisma/client";
+import { Order ,Product, User } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 interface SummaryProps{

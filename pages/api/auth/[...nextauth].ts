@@ -54,9 +54,9 @@ export const authOptions: AuthOptions = {
 ],
 
 pages: {
-    signIn:'/login',
+    signIn:'/Login',
         },
-debug: process.env.NODE_ENV !== "development",
+debug: process.env.NODE_ENV !== "production",
 session: {
     strategy: "jwt",
         },

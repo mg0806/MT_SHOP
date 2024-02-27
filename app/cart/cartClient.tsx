@@ -41,9 +41,9 @@ const CartClient: React.FC<CartClientProps> = ({currentUser}) => {
             <Heading title="Shopping Cart" center/>
             <div className=" grid grid-cols-5 text-xs pb-2 mt-8 gap-4">
                 <div className="col-span-2 justify-self-start ml-4 ">PRODUCT</div>
-                <div className=" justify-self-center ">PRICE</div>
-                <div className=" justify-self-center  ">QUANTITY</div>
-                <div className=" justify-self-end mr-4">TOTAL</div>
+                <div className=" justify-self-center hidden md:block">PRICE</div>
+                <div className=" justify-self-center hidden md:block ">QUANTITY</div>
+                <div className=" justify-self-end mr-4 hidden md:block">TOTAL</div>
                 
             </div>
             <div className="">{cartProducts && cartProducts.map((item)=>{

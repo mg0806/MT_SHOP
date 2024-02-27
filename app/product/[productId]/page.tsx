@@ -26,7 +26,6 @@ const Product = async({ params }: { params: IParams }) => {
     <div className=" p-8">
       <Container>
         <ProductDetails product={product} />
-        <div className="flex flex-col mt-20 gap-4">Add Rating</div>
         <AddRating product={product} user={user}/>
         <Listrating product={product} />
       </Container>

@@ -31,7 +31,6 @@ export async function POST(request : Request){
             rating,
             productId: product.id,
             userId,
-          
         }
     })
 

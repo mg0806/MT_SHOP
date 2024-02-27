@@ -1,6 +1,14 @@
 import prisma from '@/libs/prismadb'
 import moment from 'moment'
 
+
+interface OrderEntry {
+    createdDate: Date;
+    _sum: {
+        amount: number | null;
+    };
+}
+
 export default async function getGraphData() {
     try {
         const startDate = moment().subtract(6,"days").startOf("day");
@@ -43,7 +51,7 @@ export default async function getGraphData() {
 
         }
 
-        result.forEach((entry)=>{
+        result.forEach((entry : OrderEntry)=>{
             const day = moment(entry.createdDate).format("dddd");
             const amount = entry._sum.amount ||0;
             aggregatedData[day].totalAmount+=amount

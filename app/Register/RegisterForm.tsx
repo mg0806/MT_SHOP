@@ -32,7 +32,7 @@ const RegisterForm:React.FC<RegisterFormProps> = ({currentUser}) => {
     const router = useRouter()
     useEffect(() => {
         if (currentUser) {
-            router.push('/cart');
+            router.push('/');
             router.refresh();
         }
     },[])
@@ -54,7 +54,7 @@ const RegisterForm:React.FC<RegisterFormProps> = ({currentUser}) => {
             }).then((callback)=>{
                 
                 if (callback?.ok) {
-                    router.push('/cart')
+                    router.push('/')
                     router.refresh()
                         toast.success('Logged In')
                 }

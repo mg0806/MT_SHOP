@@ -4,10 +4,9 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import Footer from '@/components/Footer/Footer'
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@vercel/analytics/react"
 import CartProvider from '../providers/cartProviders';
 import { Toaster } from 'react-hot-toast'
-import { getCurrentUser } from '@/actions/getCurrentUser'
 import { Suspense } from 'react'
 
 const poppins = Poppins({ subsets: ['latin'],weight:['400','700'] })

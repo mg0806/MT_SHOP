@@ -4,6 +4,7 @@ import { categories } from "@/Utils/Categories";
 import Container from "../universal/Container";
 import Category from "./Category";
 import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 const Categories = () => {
 
@@ -16,15 +17,24 @@ const Categories = () => {
     }
     return ( 
     
-    <div className=" bg-white">
-        <Container>
-            <div className=" pt-4 flex flex-row items-center justify-between overflow-x-auto">
-                {categories.map((item)=>(
-                  <Category key={item.label} label={item.label} icon={item.icon} selected ={category === item.label || (category === null && item.label === 'All') }/>
-                ))}
-            </div>
-        </Container>
-    </div> );
+        <Suspense fallback={<div>Loading...</div>}>
+        <div className="bg-white">
+            <Container>
+                <div className="pt-4 flex flex-row items-center justify-between overflow-x-auto">
+                    {categories.map((item)=>(
+                        <Category 
+                            key={item.label} 
+                            label={item.label} 
+                            icon={item.icon} 
+                            selected ={category === item.label || (category === null && item.label === 'All')} 
+                        />
+                    ))}
+                </div>
+            </Container>
+        </div>
+    </Suspense>
+    
+    );
 }
  
 export default Categories;

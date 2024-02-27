@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import queryString from "query-string";
 import { useCallback } from "react";
 import { IconType } from "react-icons";
+import { Suspense } from 'react';
 
 interface CategoryProps{
     label: string;
@@ -11,11 +12,11 @@ interface CategoryProps{
     selected?: boolean
 }
 
-const Category:React.FC<CategoryProps> = ({label , icon:Icon,selected}) => {
+const CategoryComponent:React.FC<CategoryProps> = ({label , icon:Icon,selected}) => {
    const router = useRouter();
    const params = useSearchParams()
    const handelClick = useCallback(()=>{
-
+    
     if (label === 'All') {
         router.push('/')
 
@@ -54,4 +55,9 @@ const Category:React.FC<CategoryProps> = ({label , icon:Icon,selected}) => {
      );
 }
  
+const Category: React.FC<CategoryProps> = (props) => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CategoryComponent {...props} />
+    </Suspense>
+  );
 export default Category;

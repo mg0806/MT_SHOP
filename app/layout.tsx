@@ -8,6 +8,7 @@ import { Analytics } from '@vercel/analytics/react';
 import CartProvider from '../providers/cartProviders';
 import { Toaster } from 'react-hot-toast'
 import { getCurrentUser } from '@/actions/getCurrentUser'
+import { Suspense } from 'react'
 
 const poppins = Poppins({ subsets: ['latin'],weight:['400','700'] })
 
@@ -32,7 +33,9 @@ export default async function RootLayout({
         }}}/>
       <CartProvider>
       <div className='felx flex-col min-h-screen'>
+      <Suspense>
         <Navbar/>
+        </Suspense>
         <main className=' mt-auto'>{children}</main>
         <Footer/>
         </div>

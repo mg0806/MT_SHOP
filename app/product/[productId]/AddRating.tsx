@@ -84,7 +84,7 @@ interface AddRatingProps{
 
         return ( 
 
-            <div className=" flex flex-col gap-2 max-w-[500px] ">
+            <div className=" flex flex-col gap-2 max-w-[500px] mt-16 ">
             <Heading title="Rate this product"/>
             <Rating onChange={(event , newValue)=>{
                 setCustomValue('rating',newValue)

@@ -31,11 +31,11 @@ export default async function RootLayout({
           color: '#FFFFFF',
         }}}/>
       <CartProvider>
-      <div className='felx flex-col min-h-screen'>
+      <div className='flex flex-col min-h-screen'>
       <Suspense>
         <Navbar/>
         </Suspense>
-        <main className=' mt-auto'>{children}</main>
+        <main className=' flex-grow'>{children}</main>
         <Footer/>
         </div>
       </CartProvider>

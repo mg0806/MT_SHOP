@@ -29,7 +29,7 @@ export default async function RootLayout({
     <html lang="en">
 
 <head>
-        <link rel='icon' href="/mtlogo.webp" type='image/x-icon'/>
+        {/* <link rel='icon' href="/mtlogo.webp" type='image/x-icon'/> */}
       </head>
 
       <body className={`${poppins.className} text-slate-700`}>

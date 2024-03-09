@@ -110,7 +110,7 @@ const ManageProductsClient: React.FC<ManageProductClientProps> = ({products}) =>
         }).catch((err)=>{
             return console.log("Deleting Images error",err);
         })
-    },[])
+    },[router, storage])
     return ( 
 
         <div className=" max-w-[1150px] m-auto text-xl">

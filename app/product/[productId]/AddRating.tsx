@@ -58,6 +58,7 @@ interface AddRatingProps{
                 router.refresh()
                 reset()
             }).catch((error)=>{
+                console.log("error",error);
                 toast.error('Something went wrong')
             }).finally(()=>{
                 setIsLodaing(false)

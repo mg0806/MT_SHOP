@@ -70,7 +70,7 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({product}) => {
                 setIsProductInCart(true);
             }
         }
-    },[cartProducts])
+    },[cartProducts, product.id])
     // console.log("image",product.images[0])
 
 const productRating = product.reviews.reduce((acc:number,item:any)=> item.rating + acc ,0)/product.reviews.length;
@@ -79,7 +79,9 @@ const productRating = product.reviews.reduce((acc:number,item:any)=> item.rating
         setCartProduct((prev) =>{
             return {...prev,selectedImg: value};
         });
-    },[cartProduct.selectedImg]);
+    },[]
+    // removed the contents of dependency array "cartProduct.selectedImg"
+    );
 
     const handleQtyIncrease = useCallback(()=>{
         if(cartProduct.quantity ===20){

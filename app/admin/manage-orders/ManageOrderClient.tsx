@@ -95,7 +95,7 @@ const ManageOrderClient: React.FC<ManageOrderClientProps> = ({orders}) => {
             
         })
 
-    },[])
+    },[router])
 
     const handelDeliver = useCallback((id : string )=>{
         axios.put('/api/order',{
@@ -110,7 +110,7 @@ const ManageOrderClient: React.FC<ManageOrderClientProps> = ({orders}) => {
             
         })
 
-    },[])
+    },[router])
 
 
     return ( 

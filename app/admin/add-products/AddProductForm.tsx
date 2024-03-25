@@ -54,7 +54,8 @@ const AddProductForm = () => {
     useEffect(()=>{
         setCustomValue('images',images)
 
-    },[images])
+    }// removed the depemdency array "[images]"
+    )
 
     useEffect(()=>{
         if (isproductCreated) {
@@ -62,7 +63,7 @@ const AddProductForm = () => {
             setImages(null)
             setIsProductCreated(false)
         }
-    },[isproductCreated])
+    },[isproductCreated, reset])
 
 
     const onSubmit: SubmitHandler<FieldValues> = async(data) =>{

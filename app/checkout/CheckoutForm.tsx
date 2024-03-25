@@ -30,7 +30,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({clientSecret,handelSetPaymen
         }
 
         handelSetPaymentSuccess(false);
-    },[stripe])
+    },[clientSecret, handelSetPaymentSuccess, stripe])
 
     const handelSubmit = async(e:React.FormEvent) => {
         e.preventDefault();

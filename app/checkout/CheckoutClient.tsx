@@ -21,8 +21,8 @@ const CheckoutClient = () => {
 
     const router = useRouter();
 
-    console.log("paymentIntent",paymentIntent);
-    console.log("clientSecret",clientSecret);
+    // console.log("paymentIntent",paymentIntent);
+    // console.log("clientSecret",clientSecret);
     
     useEffect(()=>{
         if (cartProducts) {
@@ -54,7 +54,7 @@ const CheckoutClient = () => {
                 
             })
         }
-    },[cartProducts,paymentIntent])
+    },[cartProducts, handelSetPaymentIntent, paymentIntent, router])
 
     const options: StripeElementsOptions = {
         clientSecret,

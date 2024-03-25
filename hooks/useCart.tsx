@@ -166,12 +166,17 @@ export const CartContextProvider = (props: Props) => {
     setCartProducts(null);
     setCartTotalQty(0);
     localStorage.setItem("MTshopCartItems", JSON.stringify(null));
-  }, [cartProducts]);
+  }, []
+  // removed content of dependency array  "cartProducts"
+  );
 
   const handelSetPaymentIntent = useCallback((val: string | null) => {
     setPatmentIntent(val);
     localStorage.setItem('MTShopPaymentIntent', JSON.stringify(val));
-  },[paymentIntent])
+  },[]
+  // removed content of dependency array  "paymentIntent"
+  
+  )
 
   const value = {
     cartTotalQty,

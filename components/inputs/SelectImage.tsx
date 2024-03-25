@@ -16,7 +16,7 @@ const Selectimage:React.FC<SelectImageProps> = ({item , handelFileChange}) => {
         if (acceptedFiles.length > 0 ) {
             handelFileChange(acceptedFiles[0])
         }
-        }, [])
+        }, [handelFileChange])
         const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop,
     accept : {'image/*' : [".jpeg" , ".png" , ".jpg"]}
     })

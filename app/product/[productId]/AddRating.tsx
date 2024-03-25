@@ -3,13 +3,12 @@ import { Product, Review ,Order} from "@prisma/client";
 import { SafeUser } from '@/types';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FieldValue, FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Heading from "@/components/universal/Heading";
 import { Rating } from "@mui/material";
 import Input from "@/components/inputs/input";
 import Button from "@/components/universal/Button";
 import toast from "react-hot-toast";
-import { product } from '../../../Utils/product';
 import axios from "axios";
 
 interface AddRatingProps{
@@ -62,7 +61,7 @@ interface AddRatingProps{
             }).finally(()=>{
                 setIsLodaing(false)
             })
-            console.log("ratingData",ratingData);
+           
             
                         
         }

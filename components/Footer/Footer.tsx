@@ -31,7 +31,7 @@ const Footer = () => {
 
             <div className="w-full md:w-1/3 mb-6 md:mb-0">
                 <h3 className="text-base font-bold mb-2">About Us</h3>
-                <p className="mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla cupiditate porro perspiciatis! Tempora, ducimus tempore? Repellat perspiciatis tenetur rem molestias magnam autem minus, nulla nobis.</p>
+                <p className="mb-2">MTShop is your go-to online shopping destination, offering a diverse range of products including fashion, electronics, home decor, and more. With a user-friendly interface, easily browse, search, and filter items to find exactly what you need. Enjoy secure payment options and stay updated with exclusive deals and discounts. Save your favorite items in personalized wishlists and benefit from fast, reliable shipping services. Our dedicated customer support team is here to assist you every step of the way. Elevate your online shopping experience with MTShop – download the app now for seamless convenience and satisfaction guaranteed.</p>
                 <p>&copy; {new Date().getFullYear() } MT-Shop All rights Reserved </p>
 
             </div>

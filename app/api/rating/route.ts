@@ -1,11 +1,11 @@
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { NextResponse } from "next/server";
-import { Review } from "@prisma/client";
+import { PrismaClient, Review } from "@prisma/client";
 
 
 export async function POST(request : Request){
     const currentUser = await getCurrentUser();
-
+    const prisma = new PrismaClient()
     if (!currentUser) {
         return NextResponse.error();
         
@@ -24,7 +24,7 @@ export async function POST(request : Request){
         return NextResponse.error();
     }
 
-    const review = await prisma?.review.create({
+    const review = await prisma.review.create({
         data:{
 
             comment,

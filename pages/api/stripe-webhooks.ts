@@ -36,11 +36,12 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
         return res.status(400).send('WEBHOOK ERROR' + err)
         
     }
-
+    console.log("#######"+event);
+    
     switch(event.type){
         case 'charge.succeeded':
             const charge: any = event.data.object as Stripe.Charge;
-
+            
             if (typeof charge.payment_intent === 'string') {
                 await prisma?.order.update({
                     where: {paymentIntentId:charge.payment_intent},

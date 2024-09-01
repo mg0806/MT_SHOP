@@ -28,22 +28,22 @@ interface Props {
 }
 
 export const CartContextProvider = (props: Props) => {
-
-    const [cartTotalAmount,setCartTotalAmount] = useState(0)
+  const [cartTotalAmount, setCartTotalAmount] = useState(0);
   const [cartTotalQty, setCartTotalQty] = useState(0);
 
   const [cartProducts, setCartProducts] = useState<CartProductType[] | null>(
     null
   );
 
-  const[paymentIntent , setPatmentIntent] = useState<string | null>(null);
+  const [paymentIntent, setPatmentIntent] = useState<string | null>(null);
   // Using useEffect to make our page saty where we left after adding products to cart
   useEffect(() => {
     const cartItems: any = localStorage.getItem("MTshopCartItems");
     const cProducts: CartProductType[] | null = JSON.parse(cartItems);
-    const MTShopPaymentIntent:any = localStorage.getItem('MTShopPaymentIntent')
-    const paymentIntent:string | null = JSON.parse(MTShopPaymentIntent)
-
+    const MTShopPaymentIntent: any = localStorage.getItem(
+      "MTShopPaymentIntent"
+    );
+    const paymentIntent: string | null = JSON.parse(MTShopPaymentIntent);
 
     setCartProducts(cProducts);
     setPatmentIntent(paymentIntent);
@@ -53,11 +53,11 @@ export const CartContextProvider = (props: Props) => {
   useEffect(() => {
     const getTotal = () => {
       if (cartProducts) {
-        const {total, qty } = cartProducts?.reduce(
+        const { total, qty } = cartProducts?.reduce(
           (acc, item) => {
             const itemTotal = item.price * item.quantity;
 
-            acc.total = acc.total+itemTotal;
+            acc.total = acc.total + itemTotal;
             acc.qty = acc.qty + item.quantity;
 
             return acc;
@@ -66,11 +66,11 @@ export const CartContextProvider = (props: Props) => {
             total: 0,
             qty: 0,
           }
-          );
-          
-          setCartTotalQty(qty)
-          setCartTotalAmount(total);
-        }
+        );
+
+        setCartTotalQty(qty);
+        setCartTotalAmount(total);
+      }
     };
 
     getTotal();
@@ -162,25 +162,28 @@ export const CartContextProvider = (props: Props) => {
     [cartProducts]
   );
 
-  const handleClearCart = useCallback(() => {
-    setCartProducts(null);
-    setCartTotalQty(0);
-    localStorage.setItem("MTshopCartItems", JSON.stringify(null));
-  }, []
-  // removed content of dependency array  "cartProducts"
+  const handleClearCart = useCallback(
+    () => {
+      setCartProducts(null);
+      setCartTotalQty(0);
+      localStorage.setItem("MTshopCartItems", JSON.stringify(null));
+    },
+    [cartProducts]
+    // removed content of dependency array  "cartProducts"
   );
 
-  const handelSetPaymentIntent = useCallback((val: string | null) => {
-    setPatmentIntent(val);
-    localStorage.setItem('MTShopPaymentIntent', JSON.stringify(val));
-  },[]
-  // removed content of dependency array  "paymentIntent"
-  
-  )
+  const handelSetPaymentIntent = useCallback(
+    (val: string | null) => {
+      setPatmentIntent(val);
+      localStorage.setItem("MTShopPaymentIntent", JSON.stringify(val));
+    },
+    [paymentIntent]
+    // removed content of dependency array  "paymentIntent"
+  );
 
   const value = {
     cartTotalQty,
-  cartTotalAmount,
+    cartTotalAmount,
     cartProducts,
     handleAddProductToCart,
     handleRemoveProductFromCart,
@@ -188,7 +191,7 @@ export const CartContextProvider = (props: Props) => {
     handleCartQtyDecrease,
     handleClearCart,
     paymentIntent,
-    handelSetPaymentIntent
+    handelSetPaymentIntent,
   };
 
   return <CartContext.Provider value={value} {...props} />;

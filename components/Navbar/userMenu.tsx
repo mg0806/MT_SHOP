@@ -16,18 +16,28 @@ interface UserMenuProps {
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [loading, setLoading] = useState(false); // State to manage loading for sign out
+  const [loading, setLoading] = useState(false); // State to manage loading
 
   const toggleOpen = useCallback(() => {
     setIsOpen((prev) => !prev);
   }, []);
 
   const handleSignOut = async () => {
-    setLoading(true); // Set loading to true when sign out starts
+    setLoading(true); // Show loader when sign out starts
     await signOut({
       callbackUrl: "/Login", // Redirect to the login page after sign out
     });
-    setLoading(false); // Reset loading state after sign out
+    setLoading(false);
+    setIsOpen(false);
+    // Reset loading state after sign out
+  };
+
+  const handleClick = () => {
+    setLoading(true); // Show loader when any menu item is clicked
+    setTimeout(() => {
+      setLoading(false); // Simulate a delay, remove if unnecessary
+      setIsOpen(false);
+    }, 1500); // Adjust the timeout duration as needed
   };
 
   return (
@@ -45,11 +55,25 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
               {currentUser ? (
                 <div>
                   <Link href="/orders">
-                    <MenuItem onClick={toggleOpen}>Your Orders</MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleClick(); // Handle loader on click
+                        toggleOpen();
+                      }}
+                    >
+                      Your Orders
+                    </MenuItem>
                   </Link>
                   {currentUser.role === "ADMIN" && (
                     <Link href="/admin">
-                      <MenuItem onClick={toggleOpen}>Admin Dashboard</MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          handleClick(); // Handle loader on click
+                          toggleOpen();
+                        }}
+                      >
+                        Admin Dashboard
+                      </MenuItem>
                     </Link>
                   )}
                   <hr />
@@ -65,10 +89,24 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
               ) : (
                 <div>
                   <Link href="/Login">
-                    <MenuItem onClick={toggleOpen}>Login</MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleClick(); // Handle loader on click
+                        toggleOpen();
+                      }}
+                    >
+                      Login
+                    </MenuItem>
                   </Link>
                   <Link href="/Register">
-                    <MenuItem onClick={toggleOpen}>Register</MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleClick(); // Handle loader on click
+                        toggleOpen();
+                      }}
+                    >
+                      Register
+                    </MenuItem>
                   </Link>
                 </div>
               )}
@@ -77,7 +115,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         </div>
       </div>
       {isOpen ? <BackDrop onClick={toggleOpen} /> : null}
-      {loading && <Loader />} {/* Show loader while signing out */}
+      {loading && <Loader />}{" "}
+      {/* Show loader while any action is in progress */}
     </>
   );
 };

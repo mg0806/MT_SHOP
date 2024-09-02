@@ -104,7 +104,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     setTimeout(() => {
       router.push("/cart");
       setLoading(false); // Reset loading state after navigation
-    }, 100); // Optional: Adjust delay as needed
+    }, 200); // Optional: Adjust delay as needed
   };
 
   return (

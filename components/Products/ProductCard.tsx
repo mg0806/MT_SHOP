@@ -26,7 +26,7 @@ const ProductCard: React.FC<ProductsCardProps> = ({ data }) => {
     // Simulate a delay to show the loader before navigation
     setTimeout(() => {
       router.push(`/product/${data.id}`);
-    }, 100); // 100ms delay to show the loader
+    }, 200); // 100ms delay to show the loader
   };
 
   return (

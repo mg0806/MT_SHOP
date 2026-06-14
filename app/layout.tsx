@@ -36,13 +36,13 @@ export default async function RootLayout({
             __html: `
               (function() {
                 try {
-                  var theme = localStorage.getItem('next-mtshop-theme') || 'dark';
-                  if (theme !== 'light' && theme !== 'dark') theme = 'dark';
+                  var theme = localStorage.getItem('next-mtshop-theme') || 'light';
+                  if (theme !== 'light' && theme !== 'dark') theme = 'light';
                   document.documentElement.dataset.theme = theme;
                   document.documentElement.style.colorScheme = theme;
                 } catch (error) {
-                  document.documentElement.dataset.theme = 'dark';
-                  document.documentElement.style.colorScheme = 'dark';
+                  document.documentElement.dataset.theme = 'light';
+                  document.documentElement.style.colorScheme = 'light';
                 }
               })();
             `,

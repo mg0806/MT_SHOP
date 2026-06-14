@@ -22,13 +22,13 @@ type GraphData = {
   totalAmount: number;
 };
 const BarGraph: React.FC<BarGraphProps> = ({ data }) => {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
   const labels = data.map((item) => item.day);
   const amounts = data.map((item) => item.totalAmount);
 
   useEffect(() => {
     const root = document.documentElement;
-    const syncTheme = () => setTheme(root.dataset.theme || "dark");
+    const syncTheme = () => setTheme(root.dataset.theme || "light");
     syncTheme();
 
     const observer = new MutationObserver(syncTheme);

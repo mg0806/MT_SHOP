@@ -70,15 +70,15 @@ const ProductCard: React.FC<ProductsCardProps> = ({ data }) => {
             src={productImage}
             alt={data.name}
             fill
-            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-            className="object-contain p-4 opacity-100 transition duration-300 group-hover:scale-[1.03] group-hover:opacity-0"
+            sizes="(max-width: 640px) calc(100vw - 24px), (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+            className="object-cover object-top opacity-100 transition duration-300 group-hover:scale-[1.03] group-hover:opacity-0"
           />
           <Image
             src={hoverImage}
             alt={`${data.name} alternate view`}
             fill
-            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-            className="object-contain p-4 opacity-0 transition duration-300 group-hover:scale-[1.03] group-hover:opacity-100"
+            sizes="(max-width: 640px) calc(100vw - 24px), (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+            className="object-cover object-top opacity-0 transition duration-300 group-hover:scale-[1.03] group-hover:opacity-100"
           />
 
           <span className="absolute left-3 top-3 bg-white px-3 py-2 text-[10px] font-black uppercase tracking-[0.12em] text-black">

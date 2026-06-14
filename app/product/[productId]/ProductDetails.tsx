@@ -229,8 +229,10 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, reviewSection 
           product={product}
           handleColorSelect={handleColorSelect}
         />
-        <ProductAccordions description={product.description} />
-        {reviewSection}
+        <div className="hidden lg:block">
+          <ProductAccordions description={product.description} />
+        </div>
+        <div className="hidden lg:block">{reviewSection}</div>
       </div>
 
       <div className="fashion-panel flex min-w-0 flex-col gap-4 p-4 text-sm text-[var(--color-secondary)] sm:p-6 lg:p-8">

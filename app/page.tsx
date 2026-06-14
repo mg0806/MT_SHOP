@@ -56,7 +56,7 @@ export default async function Home({searchParams}:HomeProps) {
             View all
           </a>
         </div>
-        <div className='mt-6 grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-4 md:grid-cols-3 lg:mt-8 lg:grid-cols-4 lg:gap-8'>
+        <div className='mt-6 grid grid-cols-1 gap-x-3 gap-y-6 sm:grid-cols-2 sm:gap-x-4 md:grid-cols-3 lg:mt-8 lg:grid-cols-4 lg:gap-8'>
           {shuffleProducts.map((product:any)=>{
             return <ProductCard data={product} key={product.id}></ProductCard>;
           })}

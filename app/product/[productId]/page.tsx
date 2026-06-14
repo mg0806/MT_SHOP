@@ -1,14 +1,12 @@
 import Container from "@/components/universal/Container";
 import ProductDetails from "./ProductDetails";
 import Listrating from "./ListRating";
-import { products } from "@/Utils/products";
-import { product } from "../../../Utils/product";
 import getProductsById from "@/actions/getProductById";
 import NullData from "@/components/NullData";
 import AddRating from "./AddRating";
 import { getCurrentUser } from "@/actions/getCurrentUser";
-import Category from "../../../components/Navbar/Category";
 import AlsoLike from "./AlsoLike";
+import ProductAccordions from "@/components/product/ProductAccordions";
 
 interface IParams {
   productId?: string;
@@ -29,8 +27,14 @@ const Product = async ({ params }: { params: IParams }) => {
           product={product}
           reviewSection={<AddRating product={product} user={user} />}
         />
-        <AlsoLike category={product.category} currentProductId={product.id} />
+        <div className="lg:hidden">
+          <ProductAccordions description={product.description} />
+        </div>
+        <div className="lg:hidden">
+          <AddRating product={product} user={user} />
+        </div>
         <Listrating product={product} />
+        <AlsoLike category={product.category} currentProductId={product.id} />
       </Container>
     </div>
   );

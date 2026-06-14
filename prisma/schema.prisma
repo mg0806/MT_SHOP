@@ -1,0 +1,237 @@
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Account {
+    id                String  @id @default(auto()) @map("_id") @db.ObjectId
+    userId            String  @db.ObjectId
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? @db.String
+    access_token      String? @db.String
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? @db.String
+    session_state     String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+model User {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    name           String?
+    email          String?   @unique
+    emailVerified  DateTime?
+    image          String?
+    hashedPassword String?
+    createdAt      DateTime? @default(now())
+    updatedAt      DateTime? @updatedAt
+    role           Role      @default(USER)
+    accounts       Account[]
+    orders         Order[]
+    reviews        Review[]
+    wishlist       WishlistItem[]
+    addresses      SavedAddress[]
+}
+
+model Order {
+    id              String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId          String   @db.ObjectId
+    addressId       String?  @db.ObjectId
+    amount          Float
+    currency        String
+    status          String
+    deliveryStatus  String?
+    courierName     String?
+    awb             String?
+    subtotal              Float?
+    discountAmount        Float?   @default(0)
+    couponCode            String?
+    shippingCharge        Float?
+    taxAmount             Float?
+    grandTotal            Float?
+    razorpayOrderId       String?  @unique
+    razorpayPaymentId     String?  @unique
+    paidAt                DateTime?
+    shiprocketOrderId     String?
+    shiprocketShipmentId  String?
+    awbCode               String?
+    createdDate     DateTime @default(now())
+    updatedAt       DateTime? @updatedAt
+    paymentIntentId String?  @unique
+    products        Json     @default("[]")
+    address         Address?
+    savedAddress    SavedAddress? @relation(fields: [addressId], references: [id])
+    lineItems       OrderLineItem[]
+    refunds         Refund[]
+    user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model OrderLineItem {
+    id        String @id @default(auto()) @map("_id") @db.ObjectId
+    orderId   String @db.ObjectId
+    productId String @db.ObjectId
+    name      String
+    qty       Int
+    unitPrice Float
+    lineTotal Float
+
+    order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Refund {
+    id               String    @id @default(auto()) @map("_id") @db.ObjectId
+    orderId          String    @db.ObjectId
+    razorpayRefundId String    @unique
+    amount           Float
+    reason           String?
+    status           String    @default("INITIATED")
+    initiatedBy      String    @db.ObjectId
+    processedAt      DateTime?
+    createdAt        DateTime  @default(now())
+
+    order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Coupon {
+    id             String    @id @default(auto()) @map("_id") @db.ObjectId
+    code           String    @unique
+    type           String
+    value          Float
+    maxDiscount    Float?
+    minOrderAmount Float?
+    isActive       Boolean   @default(true)
+    expiresAt      DateTime?
+    usageLimit     Int?
+    usageCount     Int       @default(0)
+}
+
+model Product {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
+    description String
+    price       Float
+    quantity    Int?
+    finalPrice  Float?
+    brand       String
+    category    String
+    inStock     Boolean
+    isNewArrival Boolean @default(false)
+    images      Json     @default("[]")
+    availableSizes Json   @default("[]")
+    reviews     Review[]
+    wishlist    WishlistItem[]
+    weight      Float?
+    discount    Float?
+    createdAt   DateTime? @default(now())
+    updatedAt   DateTime? @updatedAt
+}
+
+model Category {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    name      String   @unique
+    icon      String   @default("FaStore")
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Review {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId      String   @db.ObjectId
+    productId   String   @db.ObjectId
+    rating      Int
+    comment     String
+    photos      Json     @default("[]")
+    helpfulYes  Int      @default(0)
+    helpfulNo   Int      @default(0)
+    createdDate DateTime @default(now())
+
+    product Product @relation(fields: [productId], references: [id])
+    user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model WishlistItem {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId    String   @db.ObjectId
+    productId String   @db.ObjectId
+    createdAt DateTime @default(now())
+
+    user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+    @@unique([userId, productId])
+}
+
+model SavedAddress {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId    String   @db.ObjectId
+    fullName  String
+    phone     String
+    email     String?
+    line1     String
+    line2     String?
+    city      String
+    state     String
+    pincode   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    orders Order[]
+}
+
+type CartProductType {
+    id          String
+    name        String
+    description String
+    category    String
+    brand       String
+    selectedImg Image
+    quantity    Int
+    price       Float
+    size        String?
+}
+
+type Image {
+    color     String
+    colorCode String
+    images    Json
+}
+
+type Address {
+    city        String
+    country     String
+    line1       String
+    line2       String
+    postal_code String
+    state       String
+}
+
+enum Role {
+    USER
+    ADMIN
+}
+
+model Banner {
+    id             String   @id @default(auto()) @map("_id") @db.ObjectId
+    titleLine1     String
+    titleLine2     String
+    subtitle       String
+    offerText      String
+    backgroundFrom String   @default("#ef4444") // Default red-500
+    backgroundTo   String   @default("#0ea5e9") // Default sky-500
+    bannerImage    String? // Cloudinary URL for banner image
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+}
+

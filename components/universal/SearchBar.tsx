@@ -36,17 +36,17 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex w-full items-center">
+    <div className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center">
       <input
         {...register("searchTerm")}
         autoComplete="off"
         type="text"
         placeholder="Search shirts, co-ords, cargos..."
-        className="h-12 min-w-0 flex-1 border border-[var(--color-border)] bg-[var(--color-surface)] px-4 text-sm font-medium outline-none placeholder:text-[var(--color-secondary)]"
+        className="h-11 min-w-0 border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-sm font-medium outline-none placeholder:text-[var(--color-secondary)] sm:h-12 sm:px-4"
       />
       <button
         onClick={handleSubmit(onSubmit)}
-        className="h-12 border border-[var(--color-accent)] bg-[var(--color-accent)] px-6 text-xs font-black uppercase tracking-[0.14em] text-[var(--color-bg)] transition hover:bg-[var(--color-primary)]"
+        className="h-11 min-w-[92px] border border-[var(--color-accent)] bg-[var(--color-accent)] px-4 text-[11px] font-black uppercase tracking-[0.12em] text-[var(--color-bg)] transition hover:bg-[var(--color-primary)] sm:h-12 sm:min-w-[116px] sm:px-6 sm:text-xs"
       >
         Search
       </button>

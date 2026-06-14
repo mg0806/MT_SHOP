@@ -27,8 +27,8 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
   // console.log(parsedProducts);
   // console.log("order", order);
   return (
-    <div className="mx-auto flex w-full max-w-[1150px] flex-col gap-6 px-4">
-      <div className="mt-8 border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[0_18px_45px_rgba(0,0,0,0.08)]">
+    <div className="mx-auto flex w-full max-w-[1150px] flex-col gap-5 px-3 sm:gap-6 sm:px-4">
+      <div className="mt-6 border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[0_18px_45px_rgba(0,0,0,0.08)] sm:mt-8 sm:p-6">
         <Heading title="Order Details" />
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           <div className="border border-[var(--color-border)] bg-[var(--color-muted)] p-4">
@@ -47,7 +47,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2">
         <div className="border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[0_14px_35px_rgba(0,0,0,0.06)]">
           <p className="mb-3 text-xs font-black uppercase tracking-[0.12em] text-[var(--color-secondary)]">Payment Status</p>
           {order.status === "pending" ? (
@@ -101,11 +101,11 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
         </div>
       </div>
 
-      <div className="border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[0_18px_45px_rgba(0,0,0,0.08)]">
+      <div className="border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[0_18px_45px_rgba(0,0,0,0.08)] sm:p-5">
         <h2 className="mb-5 text-xl font-black uppercase text-[var(--color-primary)]">Products Ordered</h2>
 
         <div className="w-full overflow-x-auto">
-          <div className="min-w-[600px]">
+          <div className="min-w-[560px]">
             {/* Table Header */}
             <div className="grid grid-cols-5 gap-4 border-b border-[var(--color-border)] bg-[var(--color-muted)] px-3 py-3 text-xs font-black uppercase tracking-[0.08em] text-[var(--color-secondary)]">
               <div className="justify-self-start">Product Image</div>

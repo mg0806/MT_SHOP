@@ -47,17 +47,17 @@ const ProductImage: React.FC<ProductImageProps> = ({
   return (
     <div className="w-full">
       {/* ✅ MOBILE: Swiper Carousel */}
-      <div className="block sm:hidden w-full">
+      <div className="block w-full sm:hidden">
         {selectedImages.length > 0 ? (
           <Swiper
             pagination={{ clickable: true }}
             modules={[Pagination, Autoplay]}
             autoplay={{ delay: 2000, disableOnInteraction: false }}
-            className="w-full h-[300px]"
+            className="h-[320px] w-full min-[420px]:h-[380px]"
           >
             {selectedImages.map((imgUrl, idx) => (
               <SwiperSlide key={idx}>
-                <div className="relative w-full h-[300px]">
+                <div className="relative h-[320px] w-full min-[420px]:h-[380px]">
                   <Image
                     src={imgUrl}
                     alt={`Image ${idx + 1}`}
@@ -74,9 +74,9 @@ const ProductImage: React.FC<ProductImageProps> = ({
       </div>
 
       {/* ✅ DESKTOP: Thumbnail Sidebar + Main Image as Swiper */}
-      <div className="hidden sm:grid grid-cols-6 gap-4 max-h-[500px] min-h-[400px]">
+      <div className="hidden min-h-[420px] max-h-[560px] grid-cols-[76px_minmax(0,1fr)] gap-4 sm:grid lg:min-h-[500px]">
         {/* Sidebar Thumbnails */}
-        <div className="flex flex-col items-center justify-start gap-2 overflow-y-auto border border-[var(--color-border)] bg-[var(--color-surface)] sm:h-full w-full">
+        <div className="flex h-full w-full flex-col items-center justify-start gap-2 overflow-y-auto border border-[var(--color-border)] bg-[var(--color-surface)]">
           {selectedImages.map((imgUrl, idx) => (
             <div
               key={idx}
@@ -84,7 +84,7 @@ const ProductImage: React.FC<ProductImageProps> = ({
                 setMainImage(imgUrl);
                 swiperRef.current?.slideTo(idx);
               }}
-              className={`relative aspect-square w-[70px] rounded cursor-pointer ${
+              className={`relative aspect-square w-14 cursor-pointer rounded sm:w-[64px] ${
                 mainImage === imgUrl
                   ? "border-2 border-[var(--color-accent)]"
                   : "border-2 border-transparent"
@@ -101,7 +101,7 @@ const ProductImage: React.FC<ProductImageProps> = ({
         </div>
 
         {/* Main Image Swiper */}
-        <div className="col-span-5 relative w-full h-full">
+        <div className="relative h-full w-full min-w-0">
           {selectedImages.length > 0 ? (
             <Swiper
               onSwiper={(swiper) => {

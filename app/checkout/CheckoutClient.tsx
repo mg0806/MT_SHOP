@@ -189,14 +189,14 @@ const CheckoutClient = ({ currentUser }: { currentUser: SafeUser | null }) => {
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px] xl:grid-cols-[minmax(0,1fr)_380px] xl:gap-8">
       <div>
-        <div className="mb-8 grid grid-cols-4 gap-2">
+        <div className="mb-6 grid grid-cols-2 gap-2 sm:grid-cols-4 lg:mb-8">
           {steps.map((item, index) => (
             <button
               key={item}
               onClick={() => setStep(index)}
-              className={`min-h-12 border text-xs font-black uppercase tracking-[0.12em] ${
+              className={`min-h-11 border px-2 text-[11px] font-black uppercase tracking-[0.1em] sm:min-h-12 sm:text-xs sm:tracking-[0.12em] ${
                 step === index
                   ? "border-[var(--color-accent)] bg-[var(--color-accent)] text-[var(--color-bg)]"
                   : "border-[var(--color-border)] text-[var(--color-secondary)]"

@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { auditLog } from "@/libs/auditLog";
 import { computeOrderTotal } from "@/libs/pricing";
-import { assertRazorpayConfigured, razorpayInstance } from "@/libs/razorpay";
+import { getRazorpayInstance } from "@/libs/razorpay";
 import { getIp, rateLimit } from "@/libs/rateLimit";
 import prisma from "@/libs/prismadb";
 import { NextResponse } from "next/server";
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
   if (!limited.allowed) return NextResponse.json({ error: "Too many checkout attempts" }, { status: 429 });
 
   try {
-    assertRazorpayConfigured();
+    const razorpayInstance = getRazorpayInstance();
     const { cartItems, couponCode, addressId } = await request.json();
     if (!Array.isArray(cartItems) || cartItems.length === 0) {
       return NextResponse.json({ error: "Cart is empty" }, { status: 400 });

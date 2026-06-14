@@ -17,11 +17,11 @@ const Navbar = async () => {
     <div className="sticky top-0 z-30 w-full border-b border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur-xl">
       <div className="py-3 lg:py-4">
         <Container>
-          <div className="grid w-full grid-cols-[1fr_auto] items-center gap-3 lg:grid-cols-[280px_1fr_520px_auto]">
+          <div className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-3 lg:grid-cols-[220px_minmax(0,1fr)_minmax(320px,460px)_auto] xl:grid-cols-[280px_minmax(0,1fr)_minmax(420px,520px)_auto]">
             <div className="flex items-center justify-between md:justify-start">
               <Link
                 href="/"
-                className="whitespace-nowrap text-xl font-black uppercase tracking-[0.18em] text-[var(--color-primary)] sm:text-2xl"
+                className="whitespace-nowrap text-lg font-black uppercase tracking-[0.16em] text-[var(--color-primary)] min-[380px]:text-xl sm:text-2xl"
               >
                 MTShop
               </Link>
@@ -67,6 +67,11 @@ const Navbar = async () => {
             </div>
           </div>
         </Container>
+        <div className="mt-3 px-4 sm:px-6 md:px-8 lg:hidden">
+          <Suspense fallback={<div className="h-11 border border-[var(--color-border)]" />}>
+            <SearchBar />
+          </Suspense>
+        </div>
       </div>
 
       <Categories />

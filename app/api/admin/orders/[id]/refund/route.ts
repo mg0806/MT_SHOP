@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { auditLog } from "@/libs/auditLog";
 import prisma from "@/libs/prismadb";
-import { razorpayInstance } from "@/libs/razorpay";
+import { getRazorpayInstance } from "@/libs/razorpay";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request, { params }: { params: { id: string } }) {
@@ -16,6 +16,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
   const maxPaise = Math.round(Number(order.grandTotal ?? order.amount / 100) * 100);
   const refundPaise = Math.min(requestedPaise, maxPaise);
 
+  const razorpayInstance = getRazorpayInstance();
   const refund = await razorpayInstance.payments.refund(order.razorpayPaymentId, {
     amount: refundPaise,
     notes: { reason: body.reason || "", adminId: user.id },

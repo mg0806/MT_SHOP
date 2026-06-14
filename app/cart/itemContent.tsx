@@ -20,11 +20,11 @@ const ItemContent: React.FC<itemContentProps> = ({ item }) => {
 
   return (
     <div className="w-full">
-      <div className="m-2 grid grid-cols-1 items-center gap-y-4 border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-5 text-sm shadow-[0_16px_40px_rgba(0,0,0,0.08)] transition hover:border-[var(--color-primary)] hover:shadow-[0_22px_55px_rgba(0,0,0,0.12)] md:grid-cols-5">
+      <div className="mx-0 my-2 grid grid-cols-1 items-center gap-y-4 border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-4 text-sm shadow-[0_16px_40px_rgba(0,0,0,0.08)] transition hover:border-[var(--color-primary)] hover:shadow-[0_22px_55px_rgba(0,0,0,0.12)] sm:px-4 sm:py-5 md:mx-2 md:grid-cols-5">
         {/* Product & Image */}
         <div className="md:col-span-2 flex items-start gap-4">
-          <Link href={`/product/${item.id}`}>
-            <div className="relative aspect-square w-[86px] shrink-0 border border-[var(--color-border)] bg-[var(--color-muted)] p-2">
+          <Link href={`/product/${item.id}`} className="shrink-0">
+            <div className="relative aspect-square w-[74px] border border-[var(--color-border)] bg-[var(--color-muted)] p-2 sm:w-[86px]">
               <Image
                 src={item.selectedImg.images[0]} // ✅ Fixed: Use first image from array
                 alt={item.name}
@@ -73,7 +73,7 @@ const ItemContent: React.FC<itemContentProps> = ({ item }) => {
         </div>
 
         {/* Mobile-specific info block */}
-        <div className="block w-full flex-col gap-2 border-t border-[var(--color-border)] px-2 pt-3 text-xs text-[var(--color-secondary)] md:hidden">
+        <div className="flex w-full flex-col gap-2 border-t border-[var(--color-border)] px-2 pt-3 text-xs text-[var(--color-secondary)] md:hidden">
           <div className="flex justify-between">
             <span>Price:</span>
             <span className="font-black text-[var(--color-primary)]">{formatPrice(item.price)}</span>

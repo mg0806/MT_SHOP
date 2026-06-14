@@ -32,7 +32,7 @@ export default async function Home({searchParams}:HomeProps) {
 
   const shuffleProducts = shuffleArray(products)
   return (
-    <div className='px-4 py-6 sm:px-8 sm:py-8'>
+    <div className='px-3 py-5 sm:px-8 sm:py-8'>
       <Container>
         <div>
           <HomeBanner/>
@@ -46,17 +46,17 @@ export default async function Home({searchParams}:HomeProps) {
             ))}
           </div>
         </div>
-        <div className="mt-12 flex items-end justify-between gap-4 border-b border-[var(--color-border)] pb-4">
+        <div className="mt-10 flex items-end justify-between gap-4 border-b border-[var(--color-border)] pb-4 sm:mt-12">
           <div>
             <p className="fashion-kicker">Latest collection</p>
-            <h2 className="mt-1 text-4xl font-black uppercase text-[var(--color-primary)] sm:text-5xl">New Arrivals</h2>
+            <h2 className="mt-1 text-3xl font-black uppercase text-[var(--color-primary)] sm:text-5xl">New Arrivals</h2>
             <p className="mt-2 text-sm text-[var(--color-secondary)]">June drop - everyday statement pieces</p>
           </div>
           <a href="/" className="hidden text-xs font-black uppercase tracking-[0.16em] text-[var(--color-accent)] sm:block">
             View all
           </a>
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mt-8 gap-6 lg:gap-8'>
+        <div className='mt-6 grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-4 md:grid-cols-3 lg:mt-8 lg:grid-cols-4 lg:gap-8'>
           {shuffleProducts.map((product:any)=>{
             return <ProductCard data={product} key={product.id}></ProductCard>;
           })}
@@ -66,9 +66,9 @@ export default async function Home({searchParams}:HomeProps) {
             <a
               key={label}
               href={`/?category=${label}`}
-              className="group flex min-h-[180px] items-end justify-between border border-[var(--color-border)] bg-[var(--color-surface)] p-5 transition hover:border-[var(--color-accent)]"
+              className="group flex min-h-[150px] items-end justify-between gap-3 border border-[var(--color-border)] bg-[var(--color-surface)] p-4 transition hover:border-[var(--color-accent)] sm:min-h-[180px] sm:p-5"
             >
-              <span className="text-3xl font-black uppercase">{label}</span>
+              <span className="text-2xl font-black uppercase sm:text-3xl">{label}</span>
               <span className="text-xs font-black uppercase tracking-[0.16em] text-[var(--color-accent)]">
                 Shop all
               </span>
@@ -91,9 +91,9 @@ export default async function Home({searchParams}:HomeProps) {
           </div>
         </section>
         <section className="mt-16 grid overflow-hidden border border-[var(--color-border)] bg-[var(--color-surface)] md:grid-cols-2">
-          <div className="p-6 md:p-10">
+          <div className="p-5 sm:p-6 md:p-10">
             <p className="fashion-kicker">Mobile app</p>
-            <h2 className="mt-2 text-5xl font-black uppercase leading-none">Shop faster on the app</h2>
+            <h2 className="mt-2 text-3xl font-black uppercase leading-none sm:text-5xl">Shop faster on the app</h2>
             <p className="mt-4 max-w-md text-[var(--color-secondary)]">
               Scan, save your wishlist, track orders, and get first access to limited drops.
             </p>

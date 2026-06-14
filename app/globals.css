@@ -45,12 +45,16 @@
 
     html {
         background: var(--color-bg);
+        max-width: 100%;
+        overflow-x: clip;
     }
 
     body {
         background: var(--color-bg);
         color: var(--color-primary);
         letter-spacing: 0;
+        max-width: 100%;
+        overflow-x: hidden;
     }
 
     ::selection {

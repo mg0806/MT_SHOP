@@ -102,12 +102,12 @@ const ProductCard: React.FC<ProductsCardProps> = ({ data }) => {
           </button>
         </div>
 
-        <div className="flex flex-1 flex-col px-4 pb-4 pt-4">
+        <div className="flex flex-1 flex-col px-3 pb-4 pt-3 sm:px-4 sm:pt-4">
           <h3 className="line-clamp-2 text-sm font-black uppercase leading-snug text-[var(--color-primary)] sm:text-[15px]">
             {truncateText(data.name)}
           </h3>
 
-          <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-[var(--color-secondary)]">
+          <div className="mt-2 flex flex-wrap items-center gap-1 text-[11px] text-[var(--color-secondary)] sm:gap-2 sm:text-xs">
             <Rating value={productRating} readOnly size="small" />
             <span>{reviews.length} reviews</span>
           </div>

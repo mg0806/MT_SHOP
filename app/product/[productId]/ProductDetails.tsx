@@ -222,7 +222,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, reviewSection 
   };
 
   return (
-    <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(360px,0.82fr)] lg:gap-10 xl:gap-14">
       <div className="flex flex-col gap-5">
         <ProductImage
           cartProduct={cartProduct}
@@ -233,9 +233,9 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, reviewSection 
         {reviewSection}
       </div>
 
-      <div className="fashion-panel flex flex-col gap-4 p-5 text-sm text-[var(--color-secondary)] sm:p-8">
+      <div className="fashion-panel flex min-w-0 flex-col gap-4 p-4 text-sm text-[var(--color-secondary)] sm:p-6 lg:p-8">
         <p className="fashion-kicker">MTShop selection</p>
-        <h2 className="text-3xl font-black uppercase text-[var(--color-primary)]">{product.name}</h2>
+        <h2 className="text-2xl font-black uppercase leading-tight text-[var(--color-primary)] sm:text-3xl">{product.name}</h2>
 
         <div className="flex items-center gap-2">
           <Rating value={productRating} readOnly />
@@ -257,7 +257,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, reviewSection 
           {product.brand}
         </div>
 
-        <div className="font-mono text-2xl font-black text-[var(--color-primary)]">
+        <div className="font-mono text-xl font-black text-[var(--color-primary)] sm:text-2xl">
           {hasSalePrice ? (
             <>
               Price:
@@ -311,10 +311,10 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, reviewSection 
               <span>Product added to cart</span>
             </p>
             <div className="relative flex max-w-[620px] flex-wrap gap-3">
-              <div className="flex-1 min-w-[280px]">
+              <div className="min-w-0 flex-1 basis-[280px]">
                 <Button lable="View Cart" outline onClick={handleViewCartClick} />
               </div>
-              <div className="flex-1 min-w-[280px]">
+              <div className="min-w-0 flex-1 basis-[280px]">
                 <Button
                   lable="Get Yours Customized Now"
                   outline
@@ -345,8 +345,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, reviewSection 
 
             <HorizontalLine />
 
-            <div className="mt-4 max-w-[620px] flex flex-wrap gap-3">
-              <div className="flex-1 min-w-[280px]">
+            <div className="mt-4 flex max-w-[620px] flex-wrap gap-3">
+              <div className="min-w-0 flex-1 basis-[280px]">
                 <input
                   type="text"
                   placeholder="Enter your Pincode"
@@ -362,7 +362,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, reviewSection 
                 />
               </div>
 
-              <div className="flex-1 min-w-[280px] flex items-center">
+              <div className="flex min-w-0 flex-1 basis-[280px] items-center">
                 <Button
                   lable="Check Delivery Availability"
                   onClick={handleCheckDelivery}
@@ -407,8 +407,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, reviewSection 
             </div>
 
             {/* 👉 Buttons Side by Side */}
-            <div className="flex flex-wrap gap-3 mt-4 max-w-[620px]">
-              <div className="flex-1 min-w-[280px]">
+            <div className="mt-4 flex max-w-[620px] flex-wrap gap-3">
+              <div className="min-w-0 flex-1 basis-[280px]">
                 <Button
                   lable="Add to Cart"
                   onClick={() => handleAddProductToCart(cartProduct)}
@@ -427,7 +427,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, reviewSection 
                 )}
               </div>
 
-              <div className="flex-1 min-w-[280px]">
+              <div className="min-w-0 flex-1 basis-[280px]">
                 <Button
                   lable="Get Yours Customized Now"
                   outline
@@ -443,7 +443,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, reviewSection 
         )}
 
         <HorizontalLine />
-        <div className="grid grid-cols-3 gap-3 text-center text-xs font-bold uppercase text-[var(--color-secondary)]">
+        <div className="grid grid-cols-1 gap-2 text-center text-xs font-bold uppercase text-[var(--color-secondary)] sm:grid-cols-3 sm:gap-3">
           <span>Free Returns</span>
           <span>Secure Payment</span>
           <span>COD Available</span>

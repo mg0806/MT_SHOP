@@ -168,7 +168,7 @@ const ProductListingClient = ({ products, title, category }: ProductListingClien
   );
 
   return (
-    <div className="px-4 py-7 sm:px-6 lg:px-10">
+    <div className="px-3 py-6 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-[1680px]">
         <div className="mb-7 border-b border-[var(--color-border)] pb-7">
           <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[var(--color-accent)]">
@@ -176,7 +176,7 @@ const ProductListingClient = ({ products, title, category }: ProductListingClien
           </p>
           <div className="mt-3 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <h1 className="text-4xl font-black uppercase leading-none text-[var(--color-primary)] sm:text-5xl lg:text-6xl">
+              <h1 className="text-3xl font-black uppercase leading-none text-[var(--color-primary)] sm:text-5xl lg:text-6xl">
                 {title}
               </h1>
               <p className="mt-3 max-w-xl text-sm text-[var(--color-secondary)] sm:text-base">
@@ -189,7 +189,7 @@ const ProductListingClient = ({ products, title, category }: ProductListingClien
           </div>
         </div>
 
-        <div className="sticky top-[112px] z-20 mb-8 flex items-center justify-between gap-3 border-y border-[var(--color-border)] bg-[var(--color-bg)]/95 py-3 backdrop-blur-xl">
+        <div className="sticky top-[138px] z-20 mb-6 flex items-center justify-between gap-3 border-y border-[var(--color-border)] bg-[var(--color-bg)]/95 py-3 backdrop-blur-xl sm:top-[146px] lg:top-[112px] lg:mb-8">
           <button
             onClick={() => setDrawerOpen(true)}
             className="flex min-h-11 items-center gap-2 border border-[var(--color-border)] px-4 text-xs font-black uppercase tracking-[0.12em] transition hover:border-[var(--color-accent)] lg:hidden"
@@ -208,12 +208,12 @@ const ProductListingClient = ({ products, title, category }: ProductListingClien
             ))}
           </div>
 
-          <label className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.12em] text-[var(--color-secondary)]">
+          <label className="flex min-w-0 items-center gap-2 text-xs font-black uppercase tracking-[0.12em] text-[var(--color-secondary)]">
             <FiSliders />
             <select
               value={sort}
               onChange={(event) => applyWithSkeleton(() => setSort(event.target.value))}
-              className="h-11 border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-[var(--color-primary)]"
+              className="h-11 min-w-0 max-w-[170px] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-[var(--color-primary)] sm:max-w-none"
             >
               {sortOptions.map((option) => (
                 <option key={option}>{option}</option>
@@ -222,11 +222,11 @@ const ProductListingClient = ({ products, title, category }: ProductListingClien
           </label>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[250px_1fr]">
+        <div className="grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)] xl:gap-8">
           <aside className="hidden lg:block">{filterPanel}</aside>
           <main>
             {loading ? (
-              <div className="grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-3 2xl:grid-cols-4">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-4 md:grid-cols-3 xl:gap-y-9 2xl:grid-cols-4">
                 {Array.from({ length: 8 }).map((_, index) => (
                   <ProductSkeleton key={index} />
                 ))}
@@ -249,7 +249,7 @@ const ProductListingClient = ({ products, title, category }: ProductListingClien
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-3 2xl:grid-cols-4">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-4 md:grid-cols-3 xl:gap-y-9 2xl:grid-cols-4">
                 {filteredProducts.map((product) => (
                   <ProductCard key={product.id} data={product} />
                 ))}

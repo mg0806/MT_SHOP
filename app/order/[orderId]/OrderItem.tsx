@@ -22,10 +22,10 @@ const OrderItem: React.FC<OrderItemProps> = ({ item }) => {
   const quantity = Number(item.quantity ?? item.qty ?? 1);
 
   return (
-    <div className="grid grid-cols-5 text-xs md:text-sm gap-4 py-4 items-center border-b border-[var(--color-border)]">
+    <div className="grid grid-cols-5 items-center gap-3 border-b border-[var(--color-border)] py-4 text-xs md:gap-4 md:text-sm">
       {/* Product Image */}
       <div className="justify-self-start">
-        <div className="relative w-[90px] md:w-[110px] aspect-square">
+        <div className="relative aspect-square w-[76px] md:w-[110px]">
           <Image
             src={imageSrc}
             alt={item.name}
@@ -36,7 +36,7 @@ const OrderItem: React.FC<OrderItemProps> = ({ item }) => {
       </div>
 
       {/* Product Name */}
-      <div className="justify-self-center">{item.name}</div>
+      <div className="justify-self-center break-words text-center">{item.name}</div>
 
       {/* Color */}
       <div className="justify-self-center text-gray-500">

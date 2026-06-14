@@ -101,7 +101,7 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
     );
   }
   return (
-    <div className="px-4 sm:px-6 lg:px-0 mt-10">
+    <div className="mt-8 px-3 sm:px-6 lg:mt-10 lg:px-0">
       <Heading title="Shopping Cart" center />
 
       {/* Table Headers */}
@@ -119,14 +119,14 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
       </div>
 
       {/* Cart Footer Summary */}
-      <div className="border-t border-[var(--color-border)] mt-8 pt-6 flex flex-col md:flex-row justify-between items-start gap-8">
+      <div className="mt-8 flex flex-col items-start justify-between gap-6 border-t border-[var(--color-border)] pt-6 md:flex-row md:gap-8">
         {/* Clear Cart Button */}
         <div className="w-full md:w-auto">
           <Button lable="Clear Cart" onClick={handleClearCart} small outline />
         </div>
 
         {/* Summary Section */}
-        <div className="w-full max-w-md border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-sm shadow-[0_18px_45px_rgba(0,0,0,0.08)]">
+        <div className="w-full max-w-none border border-[var(--color-border)] bg-[var(--color-surface)] p-5 text-sm shadow-[0_18px_45px_rgba(0,0,0,0.08)] sm:p-6 md:max-w-md">
           <p className="mb-5 text-xl font-black uppercase text-[var(--color-primary)]">
             Cart Summary
           </p>

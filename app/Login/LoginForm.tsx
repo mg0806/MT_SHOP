@@ -30,10 +30,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
     defaultValues: { email: "", password: "" },
   });
 
-  // Redirect logged-in users to cart
+  // Redirect logged-in users to home
   useEffect(() => {
     if (currentUser) {
-      router.push("/cart");
+      router.push("/");
       router.refresh();
     }
   }, [currentUser, router]);
@@ -48,7 +48,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
 
     if (callback?.ok) {
       toast.success("Logged In");
-      router.push("/cart");
+      router.push("/");
       router.refresh();
     } else if (callback?.error) {
       toast.error(callback.error);

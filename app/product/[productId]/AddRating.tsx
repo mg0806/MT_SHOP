@@ -256,32 +256,15 @@ const AddRating: React.FC<AddRatingProps> = ({ product, user }) => {
   }
 
   if (!deliveredOrder) {
-    return (
-      <section id="write-review" className="mt-4 border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[0_18px_45px_rgba(0,0,0,0.1)]">
-        <p className="fashion-kicker">Write a Review</p>
-        <h2 className="mt-2 text-2xl font-black uppercase text-[var(--color-primary)]">Review unlocks after delivery</h2>
-        <p className="mt-3 text-sm text-[var(--color-secondary)]">
-          You can rate and review this product once an order containing it is successfully delivered.
-        </p>
-        <button
-          disabled
-          className="mt-5 border border-[var(--color-border)] bg-[var(--color-muted)] px-5 py-3 text-xs font-black uppercase tracking-[0.12em] text-[var(--color-secondary)]"
-        >
-          Awaiting delivery
-        </button>
-      </section>
-    );
+    return null;
   }
 
   return (
     <section id="write-review" className="mt-4 border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[0_18px_45px_rgba(0,0,0,0.1)]">
       <div className="grid gap-4">
         <div>
-          <p className="fashion-kicker">Verified Purchase</p>
+          <p className="fashion-kicker">{deliveredOrder ? "Verified Purchase" : "Write a Review"}</p>
           <Heading title="Rate this product" />
-          <p className="mt-2 text-sm text-[var(--color-secondary)]">
-            Share fit, quality, and comfort feedback after delivery.
-          </p>
         </div>
 
         <div className="grid gap-4">
@@ -295,7 +278,7 @@ const AddRating: React.FC<AddRatingProps> = ({ product, user }) => {
                   setSelectedRating(rating);
                   setCustomValue("rating", rating);
                 }}
-                className="grid h-11 w-11 place-items-center border border-[var(--color-border)] bg-[var(--color-muted)] text-[var(--color-border)] shadow-sm transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                className="grid h-11 w-11 place-items-center border border-[var(--color-border)] bg-[var(--color-muted)] text-[var(--color-border)] shadow-sm transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-[var(--color-border)] disabled:hover:text-[var(--color-border)]"
                 aria-label={`${rating} star rating`}
               >
                 <FaStar
@@ -347,6 +330,7 @@ const AddRating: React.FC<AddRatingProps> = ({ product, user }) => {
       <div className="w-full">
         <Button
           lable={isLoading ? "Loading" : "Rate Product"}
+          disabled={isLoading}
           onClick={handleSubmit(onSubmit)}
         />
       </div>

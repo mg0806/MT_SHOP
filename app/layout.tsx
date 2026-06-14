@@ -52,6 +52,10 @@ export default async function RootLayout({
 
       <body className={`${poppins.className} bg-[var(--color-bg)] text-[var(--color-primary)] antialiased`}>
         <Toaster
+          position="top-center"
+          containerStyle={{
+            top: 72,
+          }}
           toastOptions={{
             style: {
               background: "#171412",

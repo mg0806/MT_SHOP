@@ -33,25 +33,32 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   const router = useRouter();
   useEffect(() => {
     if (currentUser) {
-      router.push("/cart");
+      router.push("/");
       router.refresh();
     }
   }, [currentUser, router]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
+    const email = String(data.email).trim().toLowerCase();
+    const payload = {
+      ...data,
+      name: String(data.name).trim(),
+      email,
+    };
+
     axios
-      .post("/api/register", data)
+      .post("/api/register", payload)
       .then(() => {
         toast.success("Account Created ");
 
         signIn("credentials", {
-          email: data.email,
+          email,
           password: data.password,
           redirect: false,
         }).then((callback) => {
           if (callback?.ok) {
-            router.push("/cart");
+            router.push("/");
             router.refresh();
             toast.success("Logged In");
           }
@@ -61,7 +68,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
           }
         });
       })
-      .catch(() => toast.error("Something went wrong"))
+      .catch((error) => {
+        const message =
+          axios.isAxiosError(error) && error.response?.data?.error
+            ? error.response.data.error
+            : "Something went wrong";
+        toast.error(message);
+      })
       .finally(() => {
         setIsLoading(false);
       });

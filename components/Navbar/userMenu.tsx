@@ -74,6 +74,9 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           <div className="absolute border border-[var(--color-border)] shadow-[0_18px_45px_rgba(0,0,0,0.45)] w-[190px] bg-[var(--color-surface)] overflow-hidden right-0 top-12 text-sm flex flex-col cursor-pointer z-40">
             {currentUser ? (
               <>
+                <MenuItem onClick={() => showLoaderAndNavigate("/account/profile")}>
+                  Profile
+                </MenuItem>
                 <MenuItem onClick={() => showLoaderAndNavigate("/orders")}>
                   Your Orders
                 </MenuItem>

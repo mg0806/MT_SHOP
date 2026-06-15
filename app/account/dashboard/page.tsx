@@ -1,10 +1,17 @@
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import getOrdersByUserId from "@/actions/getOrdersByUserId";
+import prisma from "@/libs/prismadb";
 import Link from "next/link";
 
 const AccountDashboardPage = async () => {
   const user = await getCurrentUser();
-  const orders = user ? await getOrdersByUserId(user.id) : [];
+  const [orders, addressCount, wishlistCount] = user
+    ? await Promise.all([
+        getOrdersByUserId(user.id),
+        prisma.savedAddress.count({ where: { userId: user.id } }),
+        prisma.wishlistItem.count({ where: { userId: user.id } }),
+      ])
+    : [[], 0, 0];
 
   if (!user) {
     return (
@@ -25,8 +32,8 @@ const AccountDashboardPage = async () => {
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         {[
           ["Total orders", orders.length],
-          ["Saved addresses", 0],
-          ["Wishlist count", "Saved locally"],
+          ["Saved addresses", addressCount],
+          ["Wishlist count", wishlistCount],
         ].map(([label, value]) => (
           <div key={label} className="border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
             <p className="text-sm uppercase tracking-[0.14em] text-[var(--color-secondary)]">{label}</p>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { FiHeart, FiMenu, FiSearch } from "react-icons/fi";
+import { FiHeart, FiSearch } from "react-icons/fi";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import Container from "../universal/Container";
 import CartCount from "./cartCount";
@@ -9,6 +9,7 @@ import SearchBar from "../universal/SearchBar";
 import UserMenu from "./userMenu";
 import ThemeToggle from "../universal/ThemeToggle";
 import NavLinks from "./NavLinks";
+import MobileMenu from "./MobileMenu";
 
 const Navbar = async () => {
   const currentUser = await getCurrentUser();
@@ -58,12 +59,7 @@ const Navbar = async () => {
               <div className="hidden md:block">
                 <UserMenu currentUser={currentUser} />
               </div>
-              <button
-                aria-label="Open menu"
-                className="grid min-h-11 min-w-11 place-items-center text-[var(--color-primary)] md:hidden"
-              >
-                <FiMenu size={24} />
-              </button>
+              <MobileMenu currentUser={currentUser} />
             </div>
           </div>
         </Container>

@@ -11,7 +11,7 @@ const tabs = [
   { href: "/", label: "Explore", icon: FiGrid },
   { href: "theme", label: "Theme", icon: FiMoon },
   { href: "/cart", label: "Cart", icon: FiShoppingBag },
-  { href: "/Login", label: "Profile", icon: FiUser },
+  { href: "/account/profile", label: "Profile", icon: FiUser },
 ];
 
 const BottomTabBar = () => {

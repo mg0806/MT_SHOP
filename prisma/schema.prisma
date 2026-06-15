@@ -66,6 +66,15 @@ model Order {
     shiprocketOrderId     String?
     shiprocketShipmentId  String?
     awbCode               String?
+    cancellationReason    String?
+    canceledAt            DateTime?
+    returnStatus          String?
+    returnReason          String?
+    returnRequestedAt     DateTime?
+    returnReceivedAt      DateTime?
+    returnRefundedAt      DateTime?
+    returnRefundAmount    Float?
+    returnPickupDeduction Float?
     createdDate     DateTime @default(now())
     updatedAt       DateTime? @updatedAt
     paymentIntentId String?  @unique
@@ -233,5 +242,30 @@ model Banner {
     bannerImage    String? // Cloudinary URL for banner image
     createdAt      DateTime @default(now())
     updatedAt      DateTime @updatedAt
+}
+
+model StoreSettings {
+    id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+    storeName             String   @default("MTShop")
+    legalName             String?
+    gstin                 String?
+    supportEmail          String?
+    supportPhone          String?
+    shiprocketPickupName  String   @default("Primary")
+    pickupContactName     String?
+    pickupPhone           String?
+    pickupEmail           String?
+    pickupAddressLine1    String?
+    pickupAddressLine2    String?
+    pickupCity            String?
+    pickupState           String?
+    pickupCountry         String   @default("India")
+    pickupPincode         String   @default("382481")
+    defaultPackageLength  Float    @default(29.7)
+    defaultPackageBreadth Float    @default(21)
+    defaultPackageHeight  Float    @default(2)
+    defaultPackageWeight  Float    @default(0.5)
+    updatedAt             DateTime @updatedAt
+    createdAt             DateTime @default(now())
 }
 

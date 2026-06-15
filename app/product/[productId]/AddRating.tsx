@@ -60,9 +60,8 @@ const AddRating: React.FC<AddRatingProps> = ({ product, user }) => {
     }
     const ratingData = {
       ...data,
+      productId: product.id,
       photos: photoUrls,
-      userId: user?.id,
-      product: product,
     };
     // console.log(ratingData);
     axios

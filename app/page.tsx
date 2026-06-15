@@ -6,14 +6,18 @@ import Container from '@/components/universal/Container'
 import ProductCard from '@/components/Products/ProductCard';
 import getProducts, { IProductParams } from '@/actions/getProduct';
 import NullData from '@/components/NullData';
+import getCategories from '@/actions/getCategories';
+import Link from 'next/link';
 
 interface HomeProps{
-  searchParams : IProductParams
+  searchParams : Promise<IProductParams>
 }
 
 export default async function Home({searchParams}:HomeProps) {
 
-  const products = await getProducts(searchParams)
+  const resolvedSearchParams = await searchParams
+  const products = await getProducts(resolvedSearchParams)
+  const categories = await getCategories()
 
   if (products.length === 0) {
     return <NullData title='No Products Found. Click "All" to clear filters'/>
@@ -52,9 +56,9 @@ export default async function Home({searchParams}:HomeProps) {
             <h2 className="mt-1 text-3xl font-black uppercase text-[var(--color-primary)] sm:text-5xl">New Arrivals</h2>
             <p className="mt-2 text-sm text-[var(--color-secondary)]">June drop - everyday statement pieces</p>
           </div>
-          <a href="/" className="hidden text-xs font-black uppercase tracking-[0.16em] text-[var(--color-accent)] sm:block">
+          <Link href="/" className="hidden text-xs font-black uppercase tracking-[0.16em] text-[var(--color-accent)] sm:block">
             View all
-          </a>
+          </Link>
         </div>
         <div className='mt-6 grid grid-cols-1 gap-x-3 gap-y-6 sm:grid-cols-2 sm:gap-x-4 md:grid-cols-3 lg:mt-8 lg:grid-cols-4 lg:gap-8'>
           {shuffleProducts.map((product:any)=>{
@@ -62,17 +66,17 @@ export default async function Home({searchParams}:HomeProps) {
           })}
         </div>
         <section className="mt-16 grid gap-4 md:grid-cols-3">
-          {["Shirts", "Pants", "Oversized"].map((label) => (
-            <a
-              key={label}
-              href={`/?category=${label}`}
+          {categories.slice(0, 3).map((category) => (
+            <Link
+              key={category.id}
+              href={`/?category=${encodeURIComponent(category.name)}`}
               className="group flex min-h-[150px] items-end justify-between gap-3 border border-[var(--color-border)] bg-[var(--color-surface)] p-4 transition hover:border-[var(--color-accent)] sm:min-h-[180px] sm:p-5"
             >
-              <span className="text-2xl font-black uppercase sm:text-3xl">{label}</span>
+              <span className="text-2xl font-black uppercase sm:text-3xl">{category.name}</span>
               <span className="text-xs font-black uppercase tracking-[0.16em] text-[var(--color-accent)]">
                 Shop all
               </span>
-            </a>
+            </Link>
           ))}
         </section>
         <section className="mt-16 border border-[var(--color-border)] bg-[var(--color-surface)] p-6 md:grid md:grid-cols-[1fr_1.4fr] md:p-10">

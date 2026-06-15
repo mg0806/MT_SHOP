@@ -3,6 +3,7 @@ import { auditLog } from "@/libs/auditLog";
 import prisma from "@/libs/prismadb";
 import { verifyRazorpaySignature } from "@/libs/razorpay";
 import { getIp, rateLimit } from "@/libs/rateLimit";
+import { sendOrderEmailsSafely } from "@/libs/sendOrderEmails";
 import { createShiprocketShipment } from "@/libs/shiprocket";
 import { NextResponse } from "next/server";
 
@@ -66,14 +67,17 @@ export async function POST(request: Request) {
   );
 
   if (!shouldCreateShiprocketShipment) {
-    await prisma.order.update({
+    const updatedOrder = await prisma.order.update({
       where: { id: order.id },
       data: {
         status: "PAID_SHIPMENT_PENDING",
         deliveryStatus: "pending",
       },
+      include: { lineItems: true, savedAddress: true, user: true },
     });
     auditLog("shipment_skipped_non_production", { userId: user.id, orderId: order.id });
+    await sendOrderEmailsSafely(updatedOrder);
+
     return NextResponse.json({
       success: true,
       orderId: order.id,
@@ -104,6 +108,14 @@ export async function POST(request: Request) {
   } catch (error) {
     auditLog("shipment_failed", { userId: user.id, orderId: order.id, error: (error as Error).message });
     await prisma.order.update({ where: { id: order.id }, data: { status: "PAID_SHIPMENT_PENDING" } });
+  }
+
+  const emailOrder = await prisma.order.findUnique({
+    where: { id: order.id },
+    include: { lineItems: true, savedAddress: true, user: true },
+  });
+  if (emailOrder) {
+    await sendOrderEmailsSafely(emailOrder);
   }
 
   return NextResponse.json({ success: true, orderId: order.id, awbCode, shiprocketOrderId });

@@ -1,28 +1,30 @@
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from "../../../../libs/prismadb";
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
 
     const currentUser = await getCurrentUser()
 
     if (!currentUser) {
-        return NextResponse.error()
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
     if (currentUser.role !== 'ADMIN') {
-        return NextResponse.error()
+        return NextResponse.json({ error: "Forbidden" }, { status: 403 })
     }
 
     const product = await prisma.product.delete({
-        where: { id: params.id }
+        where: { id }
 
     })
 
     return NextResponse.json(product)
 }
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     try {
         const product = await prisma.product.findUnique({
-            where: { id: params.id },
+            where: { id },
         });
 
         if (!product) {
@@ -36,7 +38,8 @@ export async function GET(request: Request, { params }: { params: { id: string }
 }
 
 // Update a product by ID
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     try {
         // console.log("inside the api");
         const currentUser = await getCurrentUser();
@@ -66,7 +69,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         }
 
         const updatedProduct = await prisma.product.update({
-            where: { id: params.id },
+            where: { id },
             data: {
                 name: body.name,
                 description: body.description,

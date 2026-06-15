@@ -166,12 +166,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, reviewSection 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          pickup_postcode: "382481",
           delivery_postcode: pincode,
           weight: weight,
-          length: 29.7,
-          breadth: 21,
-          height: 2,
           cod: 0,
         }),
       });

@@ -4,11 +4,12 @@ import prisma from "@/libs/prismadb";
 import { getRazorpayInstance } from "@/libs/razorpay";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request, { params }: { params: { id: string } }) {
+export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const user = await getCurrentUser();
   if (!user || user.role !== "ADMIN") return NextResponse.json({ error: "Admin only" }, { status: 403 });
   const body = await request.json();
-  const order = await prisma.order.findUnique({ where: { id: params.id } });
+  const order = await prisma.order.findUnique({ where: { id } });
   if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 });
   if (!order.razorpayPaymentId) return NextResponse.json({ error: "No payment to refund" }, { status: 400 });
 

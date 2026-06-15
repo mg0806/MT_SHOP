@@ -22,7 +22,7 @@ const Listrating = ({ product }: { product: any }) => {
   const [filter, setFilter] = useState("All");
   const [expanded, setExpanded] = useState<string[]>([]);
   const [lightbox, setLightbox] = useState<string | null>(null);
-  const reviews = product.reviews || [];
+  const reviews = useMemo(() => product.reviews || [], [product.reviews]);
   const average =
     reviews.length > 0
       ? reviews.reduce((sum: number, review: any) => sum + review.rating, 0) / reviews.length
@@ -59,7 +59,7 @@ const Listrating = ({ product }: { product: any }) => {
         </div>
       </div>
       <div className="mt-6 flex flex-wrap gap-2">
-        {["All", "5★", "4★", "3★", "2★", "1★"].map((item) => (
+        {["All", "5 star", "4 star", "3 star", "2 star", "1 star"].map((item) => (
           <button
             key={item}
             onClick={() => setFilter(item)}

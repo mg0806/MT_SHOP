@@ -20,6 +20,10 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700
 export const metadata: Metadata = {
   title: "MTShop | Modern Clothing",
   description: "A modern fashion e-commerce store for curated everyday clothing.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
 };
 
 export default async function RootLayout({
@@ -67,7 +71,9 @@ export default async function RootLayout({
           <CartProvider>
             <WishlistProvider>
               <div className="flex min-h-screen flex-col bg-[var(--color-bg)] text-[var(--color-primary)]">
-                <RouteLoader />
+                <Suspense fallback={null}>
+                  <RouteLoader />
+                </Suspense>
                 <AnnouncementBar />
                 <Suspense>
                   <Navbar />
@@ -75,7 +81,9 @@ export default async function RootLayout({
                 <main className="flex-grow">{children}</main>
                 <Footer />
                 <CartDrawer />
-                <BottomTabBar />
+                <Suspense fallback={null}>
+                  <BottomTabBar />
+                </Suspense>
               </div>
             </WishlistProvider>
           </CartProvider>

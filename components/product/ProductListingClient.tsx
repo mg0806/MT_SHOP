@@ -13,6 +13,8 @@ type ProductListingClientProps = {
 
 const sortOptions = ["Newest", "Price: Low to High", "Best Selling", "Rating"];
 
+const normalizeFilterValue = (value: string) => value.trim().toLowerCase();
+
 const ProductListingClient = ({ products, title, category }: ProductListingClientProps) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(category || "All");
@@ -40,7 +42,10 @@ const ProductListingClient = ({ products, title, category }: ProductListingClien
     let result = [...products];
 
     if (activeCategory !== "All") {
-      result = result.filter((product) => product.category === activeCategory);
+      const normalizedActiveCategory = normalizeFilterValue(activeCategory);
+      result = result.filter(
+        (product) => normalizeFilterValue(String(product.category || "")) === normalizedActiveCategory,
+      );
     }
     if (price === "Under Rs.1000") {
       result = result.filter((product) => Number(product.finalPrice ?? product.price) < 1000);

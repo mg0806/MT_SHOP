@@ -1,6 +1,9 @@
 import prisma from '@/libs/prismadb'
+import { unstable_noStore as noStore } from 'next/cache';
 
 export default async function getCategories() {
+    noStore();
+
     try {
         const categories = await prisma.category.findMany({
             orderBy: {
@@ -10,6 +13,7 @@ export default async function getCategories() {
 
         return categories;
     } catch (error: any) {
-        throw new Error(error);
+        console.error("Error fetching categories:", error);
+        return [];
     }
 }

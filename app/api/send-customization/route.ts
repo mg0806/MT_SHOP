@@ -9,11 +9,16 @@ const escapeHtml = (value: unknown) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 
+const stripHeaderControls = (value: unknown) => String(value ?? "").replace(/[\r\n]/g, " ").trim();
+const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
 export async function POST(req: Request) {
   const body = await req.json();
   const { name, email, artwork, frame, size, material, notes, phone } = body;
+  const replyTo = stripHeaderControls(email).toLowerCase();
+  const subjectName = stripHeaderControls(name);
 
-  if (!name || !email || !artwork) {
+  if (!subjectName || !replyTo || !artwork || !isValidEmail(replyTo)) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
@@ -41,9 +46,9 @@ export async function POST(req: Request) {
 
     await transporter.sendMail({
       from: `"Art Store Support" <${process.env.EMAIL_USER}>`,
-      replyTo: email,
-      to: "usha2408gupta@gmail.com",
-      subject: `New Customization Request from ${safe.name}`,
+      replyTo,
+      to: process.env.SELLER_EMAIL || process.env.EMAIL_USER,
+      subject: `New customization request from ${subjectName}`,
       html: `
   <div style="font-family: Arial, sans-serif; color: #333; padding: 20px; width: 100%; max-width: 600px; margin: auto; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
     <h2 style="font-size: 24px; color: #2c3e50; margin-bottom: 20px; text-align: center;">Customization Request Form</h2>

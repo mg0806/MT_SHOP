@@ -11,6 +11,7 @@ import {
   MdLibraryAdd,
   MdPhotoLibrary,
   MdCategory,
+  MdSettings,
 } from "react-icons/md";
 import Loader from "@/components/universal/Loader"; // Import the loader
 import ThemeToggle from "@/components/universal/ThemeToggle";
@@ -83,6 +84,13 @@ const AdminNav = () => {
                 label="Manage Categories"
                 icon={MdCategory}
                 selected={pathName === "/admin/manage-categories"}
+              />
+            </button>
+            <button onClick={() => handleNavigation("/admin/settings")}>
+              <AdminNavitem
+                label="Settings"
+                icon={MdSettings}
+                selected={pathName === "/admin/settings"}
               />
             </button>
             <div className="shrink-0">

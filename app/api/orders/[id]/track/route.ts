@@ -3,11 +3,12 @@ import prisma from "@/libs/prismadb";
 import { trackShipmentByAWB } from "@/libs/shiprocket";
 import { NextResponse } from "next/server";
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const user = await getCurrentUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const order = await prisma.order.findUnique({
-    where: { id: params.id },
+    where: { id },
     select: { userId: true, awbCode: true, awb: true, status: true },
   });
   if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 });

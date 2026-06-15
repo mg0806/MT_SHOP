@@ -15,6 +15,17 @@ interface ProductsCardProps {
   data: any;
 }
 
+const getCardImageUrl = (src: string) => {
+  if (!src.includes("res.cloudinary.com") || !src.includes("/image/upload/")) {
+    return src;
+  }
+
+  return src.replace(
+    "/image/upload/",
+    "/image/upload/f_auto,q_auto,e_trim:10,c_fill,g_auto,w_900,h_1125/",
+  );
+};
+
 const ProductCard: React.FC<ProductsCardProps> = ({ data }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -32,6 +43,8 @@ const ProductCard: React.FC<ProductsCardProps> = ({ data }) => {
     data.images?.[1]?.image ??
     data.images?.[1]?.images?.[0] ??
     productImage;
+  const cardProductImage = getCardImageUrl(productImage);
+  const cardHoverImage = getCardImageUrl(hoverImage);
   const hasSalePrice =
     typeof data.finalPrice === "number" &&
     data.finalPrice > 0 &&
@@ -65,20 +78,20 @@ const ProductCard: React.FC<ProductsCardProps> = ({ data }) => {
       )}
 
       <div className="flex h-full w-full flex-col">
-        <div className="relative aspect-[3/4] w-full overflow-hidden border-b border-[var(--color-border)] bg-[var(--color-muted)]">
+        <div className="relative aspect-[4/5] w-full overflow-hidden border-b border-[var(--color-border)] bg-[var(--color-muted)] sm:aspect-[3/4]">
           <Image
-            src={productImage}
+            src={cardProductImage}
             alt={data.name}
             fill
             sizes="(max-width: 640px) calc(100vw - 24px), (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-            className="object-cover object-top opacity-100 transition duration-300 group-hover:scale-[1.03] group-hover:opacity-0"
+            className="object-cover object-center opacity-100 transition duration-300 group-hover:scale-[1.03] group-hover:opacity-0"
           />
           <Image
-            src={hoverImage}
+            src={cardHoverImage}
             alt={`${data.name} alternate view`}
             fill
             sizes="(max-width: 640px) calc(100vw - 24px), (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-            className="object-cover object-top opacity-0 transition duration-300 group-hover:scale-[1.03] group-hover:opacity-100"
+            className="object-cover object-center opacity-0 transition duration-300 group-hover:scale-[1.03] group-hover:opacity-100"
           />
 
           <span className="absolute left-3 top-3 bg-white px-3 py-2 text-[10px] font-black uppercase tracking-[0.12em] text-black">

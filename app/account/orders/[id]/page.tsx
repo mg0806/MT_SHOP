@@ -2,8 +2,9 @@ import getOrderById from "@/actions/getOrderById";
 import { formatPrice } from "@/Utils/formatPrice";
 import Link from "next/link";
 
-const AccountOrderDetailPage = async ({ params }: { params: { id: string } }) => {
-  const order = await getOrderById({ orderId: params.id });
+const AccountOrderDetailPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
+  const order = await getOrderById({ orderId: id });
 
   if (!order) return <div className="p-8">Order not found.</div>;
 

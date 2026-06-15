@@ -1,10 +1,17 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+const stripHeaderControls = (value: unknown) => String(value ?? "").replace(/[\r\n]/g, " ").trim();
+const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
 export async function POST(req: Request) {
     try {
         const { name, email, message } = await req.json();
-        if (!name || !email || !message) {
+        const safeName = stripHeaderControls(name);
+        const safeEmail = stripHeaderControls(email).toLowerCase();
+        const safeMessage = String(message ?? "").trim();
+
+        if (!safeName || !safeEmail || !safeMessage || !isValidEmail(safeEmail)) {
             return NextResponse.json({ success: false, message: "Missing required fields." }, { status: 400 });
         }
 
@@ -20,10 +27,10 @@ export async function POST(req: Request) {
         // Email Options
         const mailOptions = {
             from: `"MTShop Contact" <${process.env.EMAIL_USER}>`,
-            replyTo: email,
+            replyTo: safeEmail,
             to: process.env.EMAIL_USER, // Change this to your email
-            subject: `User Complain From mandla store , Name : ${name}`,
-            text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+            subject: `User complaint from MTShop: ${safeName}`,
+            text: `Name: ${safeName}\nEmail: ${safeEmail}\nMessage: ${safeMessage}`,
         };
 
         // Send Email

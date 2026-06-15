@@ -9,6 +9,7 @@ import {
   MdDeliveryDining,
   MdDone,
   MdFileDownload,
+  MdKeyboardReturn,
   MdRemoveRedEye,
 } from "react-icons/md";
 import ActionBtn from "@/components/ActionBtn";
@@ -89,6 +90,7 @@ const ManageOrderClient: React.FC<ManageOrderClientProps> = ({ orders }) => {
         paymentStatus: order.status,
         date: moment(order.createdDate).fromNow(),
         deliverySatus: order.deliveryStatus,
+        returnStatus: order.returnStatus,
       };
     });
   }
@@ -154,6 +156,24 @@ const ManageOrderClient: React.FC<ManageOrderClientProps> = ({ orders }) => {
         });
     },
     [router]
+  );
+
+  const handleReturnReceived = useCallback(
+    (id: string) => {
+      setLoadingOrderId(id);
+      axios
+        .post(`/api/admin/orders/${id}/return-received`)
+        .then((res) => {
+          toast.success(res.data?.refundId ? "Return received. Refund initiated." : "Return received.");
+          router.refresh();
+          setLoadingOrderId(null);
+        })
+        .catch((err) => {
+          toast.error(err.response?.data?.error || "Unable to mark return received");
+          setLoadingOrderId(null);
+        });
+    },
+    [router],
   );
 
   const handleExportOrders = useCallback(() => {
@@ -260,6 +280,9 @@ const ManageOrderClient: React.FC<ManageOrderClientProps> = ({ orders }) => {
                         <div className="flex gap-3">
                           <ActionBtn icon={MdDeliveryDining} onClick={() => handelDispatch(row.id)} />
                           <ActionBtn icon={MdDone} onClick={() => handelDeliver(row.id)} />
+                          {row.returnStatus === "REQUESTED" || row.returnStatus === "IN_TRANSIT" ? (
+                            <ActionBtn icon={MdKeyboardReturn} onClick={() => handleReturnReceived(row.id)} />
+                          ) : null}
                           <ActionBtn
                             icon={MdRemoveRedEye}
                             onClick={() => {

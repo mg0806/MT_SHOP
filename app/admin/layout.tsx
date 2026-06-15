@@ -1,4 +1,5 @@
 import AdminNav from "@/components/admin/adminNav";
+import AdminHistoryControls from "@/components/admin/AdminHistoryControls";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { redirect } from "next/navigation";
 
@@ -23,6 +24,7 @@ const AdminLayout = async ({children}:{children: React.ReactNode}) => {
                 <AdminNav/>
             </div>
             {children}
+            <AdminHistoryControls />
         </div>
      );
 }

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import getStoreSettings from "@/actions/getStoreSettings";
 import {
     getCheapestRoadCourier,
     getShiprocketAvailability,
@@ -7,7 +8,16 @@ import {
 export async function POST(req: Request) {
     try {
         const payload = await req.json();
-        const data = await getShiprocketAvailability(payload);
+        const settings = await getStoreSettings();
+        const data = await getShiprocketAvailability({
+            pickup_postcode: payload.pickup_postcode || settings.pickupPincode,
+            delivery_postcode: payload.delivery_postcode,
+            weight: payload.weight || settings.defaultPackageWeight,
+            length: payload.length || settings.defaultPackageLength,
+            breadth: payload.breadth || settings.defaultPackageBreadth,
+            height: payload.height || settings.defaultPackageHeight,
+            cod: Boolean(payload.cod),
+        });
         const cheapestRoadCourier = getCheapestRoadCourier(
             data?.available_courier_companies || []
         );

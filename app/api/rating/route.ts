@@ -1,59 +1,64 @@
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { NextResponse } from "next/server";
-import { Product, Review } from "@prisma/client";
 import prisma from "@/libs/prismadb";
 
+const getOrderProducts = (products: unknown): any[] => {
+    if (Array.isArray(products)) return products;
+    if (typeof products === "string") {
+        try {
+            const parsed = JSON.parse(products);
+            return Array.isArray(parsed) ? parsed : [];
+        } catch {
+            return [];
+        }
+    }
+    return [];
+};
+
+const getProductIdFromOrderItem = (item: any) => item?.productId || item?.id;
 
 export async function POST(request: Request) {
     const currentUser = await getCurrentUser();
     if (!currentUser) {
-        return NextResponse.error();
-
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const body = await request.json()
-    const { comment, rating, product, userId, photos } = body;
+    const { comment, rating, productId, product, photos } = body;
+    const safeProductId = typeof productId === "string" ? productId : product?.id;
+    const numericRating = Number(rating);
 
-    const deliveredOrder = currentUser?.orders.some(order => {
-        const products: Product[] = (() => {
-            if (Array.isArray(order.products)) {
-                return order.products as Product[];
-            }
-            if (typeof order.products === "string") {
-                try {
-                    const parsed = JSON.parse(order.products);
-                    return Array.isArray(parsed) ? parsed as Product[] : [];
-                } catch (error) {
-                    console.error("Failed to parse order.products:", error);
-                    return [];
-                }
-            }
-            return [];
-        })();
+    if (!safeProductId || !comment || !Number.isInteger(numericRating) || numericRating < 1 || numericRating > 5) {
+        return NextResponse.json({ error: "Invalid review data" }, { status: 400 });
+    }
 
-        return products.some((item: any) => (item.productId || item.id) === product.id) && order.deliveryStatus === "delivered";
+    const deliveredOrder = currentUser.orders.some((order) => {
+        if (order.deliveryStatus !== "delivered") return false;
+        return getOrderProducts(order.products).some((item: any) => getProductIdFromOrderItem(item) === safeProductId);
     });
 
+    if (!deliveredOrder) {
+        return NextResponse.json({ error: "Reviews unlock after delivery" }, { status: 403 });
+    }
 
+    const existingReview = await prisma.review.findFirst({
+        where: {
+            productId: safeProductId,
+            userId: currentUser.id,
+        },
+    });
 
-
-
-    const userReview = product?.reviews.find(((review: Review) => {
-        return review.userId === currentUser.id
-    }))
-
-    if (userReview || !deliveredOrder) {
-        return NextResponse.error();
+    if (existingReview) {
+        return NextResponse.json({ error: "Product already reviewed" }, { status: 409 });
     }
 
     const review = await prisma.review.create({
         data: {
-
             comment,
-            rating,
+            rating: numericRating,
             photos: Array.isArray(photos) ? photos : [],
-            productId: product.id,
-            userId,
+            productId: safeProductId,
+            userId: currentUser.id,
         }
     })
 

@@ -3,6 +3,7 @@ import { auditLog } from "@/libs/auditLog";
 import { computeOrderTotal } from "@/libs/pricing";
 import prisma from "@/libs/prismadb";
 import { getIp, rateLimit } from "@/libs/rateLimit";
+import { sendOrderEmailsSafely } from "@/libs/sendOrderEmails";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -65,6 +66,12 @@ export async function POST(request: Request) {
     );
 
     auditLog("cod_order_confirmed", { userId: user.id, orderId: order.id, ip: getIp(request.headers) });
+    await sendOrderEmailsSafely({
+      ...order,
+      savedAddress: address,
+      user,
+    });
+
     return NextResponse.json({ success: true, orderId: order.id, pricing });
   } catch (error) {
     const message = error instanceof Error ? error.message : "COD checkout failed";

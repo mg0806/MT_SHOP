@@ -1,7 +1,6 @@
 import prisma from "@/libs/prismadb";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/actions/getCurrentUser";
-import { product } from '../../../Utils/product';
 import getProducts from "@/actions/getProduct";
 
 
@@ -12,10 +11,10 @@ export async function POST(request: Request) {
 
 
     if (!currentUser) {
-        return NextResponse.error()
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
     if (currentUser.role !== 'ADMIN') {
-        return NextResponse.error()
+        return NextResponse.json({ error: "Forbidden" }, { status: 403 })
     }
 
     const body = await request.json()
@@ -45,7 +44,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
     const currentUser = await getCurrentUser()
     if (!currentUser || currentUser.role !== 'ADMIN') {
-        return NextResponse.error()
+        return NextResponse.json({ error: "Forbidden" }, { status: currentUser ? 403 : 401 })
     }
 
     const body = await request.json()

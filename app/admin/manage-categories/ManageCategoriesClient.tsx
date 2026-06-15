@@ -86,36 +86,14 @@ const ManageCategoriesClient: React.FC<ManageCategoriesClientProps> = ({
 
   const handleDelete = useCallback(
     async (id: string, name: string) => {
-      // First check if products exist
       setLoading(true);
       try {
         const response = await axios.delete(`/api/categories/${id}`);
-        toast.success("Category deleted");
+        const updatedProducts = response.data?.updatedProducts || 0;
+        toast.success(updatedProducts ? `Category deleted. ${updatedProducts} products moved to Uncategorized.` : "Category deleted");
         router.refresh();
       } catch (error: any) {
-        if (
-          error.response?.status === 400 &&
-          error.response.data.productsCount
-        ) {
-          // Show confirmation dialog
-          const confirmDelete = window.confirm(
-            `${error.response.data.message}\n\nDo you want to continue and delete all products in this category?`,
-          );
-          if (confirmDelete) {
-            // Force delete
-            try {
-              await axios.delete(`/api/categories/${id}?force=true`);
-              toast.success("Category and all products deleted");
-              router.refresh();
-            } catch (forceError: any) {
-              toast.error(
-                forceError.response?.data?.message || "Failed to delete",
-              );
-            }
-          }
-        } else {
-          toast.error(error.response?.data?.message || "Something went wrong");
-        }
+        toast.error(error.response?.data?.message || "Something went wrong");
       } finally {
         setLoading(false);
       }

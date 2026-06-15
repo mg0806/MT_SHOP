@@ -1,4 +1,5 @@
 import axios from "axios";
+import getStoreSettings from "@/actions/getStoreSettings";
 
 const BASE = "https://apiv2.shiprocket.in/v1/external";
 let cachedToken: string | null = null;
@@ -20,13 +21,14 @@ export async function createShiprocketShipment(order: any) {
   const headers = { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
   const address = order.savedAddress;
   if (!address) throw new Error("Order address missing");
+  const settings = await getStoreSettings();
 
   const orderRes = await axios.post(
     `${BASE}/orders/create/adhoc`,
     {
       order_id: order.id,
       order_date: new Date().toISOString().split("T")[0],
-      pickup_location: "Primary",
+      pickup_location: settings.shiprocketPickupName,
       channel_id: process.env.SHIPROCKET_CHANNEL_ID,
       billing_customer_name: address.fullName,
       billing_address: address.line1,
@@ -46,10 +48,10 @@ export async function createShiprocketShipment(order: any) {
       })),
       payment_method: "Prepaid",
       sub_total: order.subtotal,
-      length: 30,
-      breadth: 25,
-      height: 5,
-      weight: 0.5,
+      length: settings.defaultPackageLength,
+      breadth: settings.defaultPackageBreadth,
+      height: settings.defaultPackageHeight,
+      weight: settings.defaultPackageWeight,
     },
     { headers },
   );
@@ -77,4 +79,15 @@ export async function trackShipmentByAWB(awbCode: string) {
     headers: { Authorization: `Bearer ${token}` },
   });
   return res.data.tracking_data;
+}
+
+export async function cancelShiprocketOrder(shiprocketOrderId: string) {
+  const token = await getToken();
+  const headers = { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
+
+  await axios.post(
+    `${BASE}/orders/cancel`,
+    { ids: [Number(shiprocketOrderId)] },
+    { headers },
+  );
 }

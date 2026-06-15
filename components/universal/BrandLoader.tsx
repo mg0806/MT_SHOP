@@ -6,7 +6,7 @@ type BrandLoaderProps = {
 
 const BrandLoader = ({ label = "Loading" }: BrandLoaderProps) => {
   return (
-    <div className="fixed inset-0 z-[1200] grid place-items-center bg-[var(--color-bg)]/90 px-4 backdrop-blur-md">
+    <div className="fixed left-0 top-0 z-[1200] flex h-[100dvh] w-screen items-center justify-center bg-[var(--color-bg)] px-4">
       <div className="relative flex flex-col items-center gap-5">
         <div className="relative grid h-28 w-28 place-items-center border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[0_24px_80px_rgba(0,0,0,0.28)]">
           <div className="absolute inset-2 border border-[var(--color-accent)]/35" />

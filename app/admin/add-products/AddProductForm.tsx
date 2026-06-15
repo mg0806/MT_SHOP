@@ -75,13 +75,21 @@ const AddProductForm = () => {
     },
   });
 
+  const setCustomValue = useCallback((id: string, value: any) => {
+    setValue(id, value, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+  }, [setValue]);
+
   useEffect(() => {
     setCustomValue("images", images);
-  }, [images]);
+  }, [images, setCustomValue]);
 
   useEffect(() => {
     setCustomValue("availableSizes", selectedSizes);
-  }, [selectedSizes]);
+  }, [selectedSizes, setCustomValue]);
 
   useEffect(() => {
     if (isProductCreated) {
@@ -174,14 +182,6 @@ const AddProductForm = () => {
 
   const category = watch("category");
   const productSizes = ["XS", "S", "M", "L", "XL", "XXL", "3XL", "Free Size"];
-
-  const setCustomValue = (id: string, value: any) => {
-    setValue(id, value, {
-      shouldValidate: true,
-      shouldDirty: true,
-      shouldTouch: true,
-    });
-  };
 
   const addImageToState = useCallback((value: ImageType) => {
     setImages((prev = []) => {

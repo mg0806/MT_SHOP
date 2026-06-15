@@ -50,12 +50,6 @@ const Categories = () => {
     }
   }, [isMainPage]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => setIsLoading(false), 500);
-    return () => clearTimeout(timer);
-  }, [category]);
-
   if (!isMainPage) {
     return null;
   }
